@@ -170,7 +170,8 @@ class ST_RETURN {
 exports.ST_RETURN = ST_RETURN;
 
 class FUNCTIONS {
-    constructor(params, stmts) {
+    constructor(funcName, params, stmts) {
+        this.funcName = funcName;
         this.params = params;
         this.stmts = stmts;
     }
@@ -193,4 +194,4 @@ class PROGRAM {
         this.stmts = stmts;
     }
 }
-exports.PROGRAM = PROGRAM; 
+exports.PROGRAM = PROGRAM;

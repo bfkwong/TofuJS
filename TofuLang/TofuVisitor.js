@@ -19,10 +19,12 @@ class TofuVisitor {
     visitClassDeclarations(ctx) {
         if (ctx) {
             let classes = [];
-            if (Array.isArray(ctx)) {
+            for (let clss of ctx) {
+                let className = clss.IDENTIFIER().getText();
+                let funcDecls = this.visitFunctionsDeclarations(clss.funDecl());
+                let stmtDecls = this.visitStatementDeclarations(clss.stmt());
 
-            } else {
-
+                classes.push(new ast.CLASS(className, funcDecls, stmtDecls)); 
             }
             return classes;
         }
@@ -32,14 +34,20 @@ class TofuVisitor {
     visitFunctionsDeclarations(ctx) {
         if (ctx) {
             let funcs = [];
-            if (Array.isArray(ctx)) {
+            for (let func of ctx) {
+                let funcName = func.IDENTIFIER().getText();
+                let parameters = this.visitParameter(func.parameter());
+                let stmt = this.visitStatement(func.stmt());
 
-            } else {
-
+                funcs.push(new ast.FUNCTIONS(funcName, parameters, stmt))
             }
             return funcs;
         }
         return [];
+    }
+
+    visitParameter(ctx) {
+        return ctx.IDENTIFIER().map(id => this.visitPrimaryExpression(id));
     }
 
     visitStatementDeclarations(ctx) {
@@ -85,9 +93,7 @@ class TofuVisitor {
     }
 
     visitBlockStatement(ctx) {
-        let statements = ctx.stmt().map((st) => {
-            this.visitStatement(st);
-        });
+        let statements = ctx.stmt().map((st) => this.visitStatement(st));
         return new ast.ST_BLOCK(statements);
     }
 
