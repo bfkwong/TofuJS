@@ -43,37 +43,70 @@ class TofuVisitor {
     }
 
     visitStatementDeclarations(ctx) {
-        const chooseStatementVisitor = (ctx) => {
-            if (ctx.iterationStmt()) {
-                return this.visitIterationStatement(ctx);
-            } else if (ctx.blockStmt()) {
-                return this.visitBlockStatement(ctx);
-            } else if (ctx.expStmt()) {
-                return this.visitExpressionStatement(ctx);
-            } else if (ctx.ifStmt()) {
-                return this.visitIfStatement(ctx);
-            } else if (ctx.printStmt()) {
-                return this.visitPrintStatement(ctx);
-            } else {
-                return this.visitReturnStatement(ctx);
-            }
-        };
-
         if (ctx) {
             let stmts = [];
             for (let stmt of ctx) {
-                stmts.push(chooseStatementVisitor(stmt));
+                stmts.push(this.visitStatement(stmt));
             }
             return stmts;
         }
         return [];
     }
 
-    visitExpressionStatement(ctx) {
-        if (ctx.expStmt()) {
-            let expr = this.visitExpression(ctx.expStmt().expression());
-            return new ast.ST_EXP(expr);
+    visitStatement(ctx) {
+        if (ctx.iterationStmt()) {
+            return this.visitIterationStatement(ctx.iterationStmt());
+        } else if (ctx.blockStmt()) {
+            return this.visitBlockStatement(ctx.blockStmt());
+        } else if (ctx.expStmt()) {
+            return this.visitExpressionStatement(ctx.expStmt());
+        } else if (ctx.ifStmt()) {
+            return this.visitIfStatement(ctx.ifStmt());
+        } else if (ctx.printStmt()) {
+            return this.visitPrintStatement(ctx.printStmt());
+        } else {
+            return this.visitReturnStatement(ctx.retStmt());
         }
+    }
+
+    visitIterationStatement(ctx) {
+        let guard = this.visitExpression(ctx.expression());
+        let body = this.visitBlockStatement(ctx.blockStmt());
+
+        return new ast.ST_WHILE(guard, body);
+    }
+
+    visitIfStatement(ctx) {
+        let guard = this.visitExpression(ctx.expression());
+        let thenSt = this.visitBlockStatement(ctx.blockStmt(0));
+        let elseSt = ctx.blockStmt(1) ? this.visitBlockStatement(ctx.blockStmt(1)) : undefined;
+
+        return elseSt ? new ast.ST_IF(guard, thenSt, elseSt) : new ast.ST_IF(guard, thenSt);
+    }
+
+    visitBlockStatement(ctx) {
+        let statements = ctx.stmt().map((st) => {
+            this.visitStatement(st);
+        });
+        return new ast.ST_BLOCK(statements);
+    }
+
+    visitReturnStatement(ctx) {
+        if (ctx.expression(0)) {
+            let expr = this.visitExpression(ctx.expression());
+            return new ast.ST_RETURN(expr);
+        }
+        return new ast.ST_RETURN();
+    }
+
+    visitPrintStatement(ctx) {
+        let expr = this.visitExpression(ctx.expression());
+        return new ast.ST_PRINT(expr);
+    }
+
+    visitExpressionStatement(ctx) {
+        let expr = this.visitExpression(ctx.expression());
+        return new ast.ST_EXP(expr);
     }
 
     visitExpression(ctx) {
