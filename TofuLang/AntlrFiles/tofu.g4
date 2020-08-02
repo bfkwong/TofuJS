@@ -36,17 +36,21 @@ iterationStmt: 'while' '(' expression ')' 'is' 'true' blockStmt;
 
 expression: logORExpression ('=' expression)?;
 
-logORExpression: logANDExpression ('or' logANDExpression)?;
+logORExpression: logANDExpression ('or' logANDExpression)*;
 
-logANDExpression: eqExpression ('and' eqExpression)?;
+logANDExpression: eqExpression ('and' eqExpression)*;
 
-eqExpression: relExpression (eqOp=('==' | '!=') relExpression)?;
+eqExpression: relExpression (eqOp relExpression)*;
+eqOp: '==' | '!=';
 
-relExpression: addExpression (relOp=('>' | '>=' | '<' | '<=') addExpression)?;
+relExpression: addExpression (relOp addExpression)*;
+relOp: '>' | '>=' | '<' | '<=';
 
-addExpression: multExpression (addOp=('+' | '-') multExpression)?;
+addExpression: multExpression (addOp multExpression)*;
+addOp: '+' | '-';
 
-multExpression: unaryExpression (multOp=('*' | '/') unaryExpression)?;
+multExpression: unaryExpression (multOp unaryExpression)*;
+multOp: '*' | '/';
 
 unaryExpression: (unaryOp=('!' | '-'))? callMemExpression;
 

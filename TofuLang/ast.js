@@ -85,7 +85,7 @@ exports.EXP_BINARY = EXP_BINARY;
 class EXP_UNARY {
     constructor(opr, opnd) {
         this.opr = opr;
-        this.opnd = opn;
+        this.opnd = opnd;
     }
 }
 exports.EXP_UNARY = EXP_UNARY;
@@ -123,6 +123,20 @@ class EXP_MAKE {
     }
 }
 exports.EXP_MAKE = EXP_MAKE;
+
+class EXP_LIST {
+    constructor(exprs) {
+        this.exprs = exprs;
+    }
+}
+exports.EXP_LIST = EXP_LIST;
+
+class EXP_NEST {
+    constructor(expr) {
+        this.expr = expr;
+    }
+}
+exports.EXP_NEST = EXP_NEST;
 
 class ST_EXP {
     constructor(exp) {

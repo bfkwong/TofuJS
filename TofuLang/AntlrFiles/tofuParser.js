@@ -6,150 +6,175 @@ var grammarFileName = "tofu.g4";
 
 
 var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
-    "\u0003+\u00e4\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t",
+    "\u0003+\u010a\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t",
     "\u0004\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007\t\u0007\u0004",
     "\b\t\b\u0004\t\t\t\u0004\n\t\n\u0004\u000b\t\u000b\u0004\f\t\f\u0004",
     "\r\t\r\u0004\u000e\t\u000e\u0004\u000f\t\u000f\u0004\u0010\t\u0010\u0004",
     "\u0011\t\u0011\u0004\u0012\t\u0012\u0004\u0013\t\u0013\u0004\u0014\t",
     "\u0014\u0004\u0015\t\u0015\u0004\u0016\t\u0016\u0004\u0017\t\u0017\u0004",
-    "\u0018\t\u0018\u0003\u0002\u0003\u0002\u0003\u0002\u0007\u00024\n\u0002",
-    "\f\u0002\u000e\u00027\u000b\u0002\u0003\u0003\u0003\u0003\u0003\u0003",
-    "\u0003\u0003\u0003\u0003\u0003\u0003\u0007\u0003?\n\u0003\f\u0003\u000e",
-    "\u0003B\u000b\u0003\u0003\u0003\u0003\u0003\u0003\u0004\u0003\u0004",
-    "\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0005\u0003\u0005\u0003\u0005",
-    "\u0003\u0005\u0007\u0005O\n\u0005\f\u0005\u000e\u0005R\u000b\u0005\u0005",
-    "\u0005T\n\u0005\u0003\u0005\u0003\u0005\u0003\u0006\u0003\u0006\u0003",
-    "\u0006\u0003\u0006\u0003\u0006\u0003\u0006\u0005\u0006^\n\u0006\u0003",
-    "\u0007\u0003\u0007\u0005\u0007b\n\u0007\u0003\b\u0003\b\u0003\b\u0003",
-    "\t\u0003\t\u0007\ti\n\t\f\t\u000e\tl\u000b\t\u0003\t\u0003\t\u0003\n",
-    "\u0003\n\u0003\n\u0003\n\u0003\n\u0003\n\u0003\n\u0003\n\u0003\n\u0003",
-    "\n\u0003\n\u0005\n{\n\n\u0003\u000b\u0003\u000b\u0003\u000b\u0005\u000b",
-    "\u0080\n\u000b\u0003\u000b\u0003\u000b\u0003\u000b\u0003\f\u0003\f\u0003",
-    "\f\u0003\f\u0003\f\u0003\f\u0003\f\u0003\f\u0003\r\u0003\r\u0003\r\u0005",
-    "\r\u0090\n\r\u0003\u000e\u0003\u000e\u0003\u000e\u0005\u000e\u0095\n",
-    "\u000e\u0003\u000f\u0003\u000f\u0003\u000f\u0005\u000f\u009a\n\u000f",
-    "\u0003\u0010\u0003\u0010\u0003\u0010\u0005\u0010\u009f\n\u0010\u0003",
-    "\u0011\u0003\u0011\u0003\u0011\u0005\u0011\u00a4\n\u0011\u0003\u0012",
-    "\u0003\u0012\u0003\u0012\u0005\u0012\u00a9\n\u0012\u0003\u0013\u0003",
-    "\u0013\u0003\u0013\u0005\u0013\u00ae\n\u0013\u0003\u0014\u0005\u0014",
-    "\u00b1\n\u0014\u0003\u0014\u0003\u0014\u0003\u0015\u0003\u0015\u0007",
-    "\u0015\u00b7\n\u0015\f\u0015\u000e\u0015\u00ba\u000b\u0015\u0003\u0016",
-    "\u0003\u0016\u0003\u0016\u0005\u0016\u00bf\n\u0016\u0003\u0017\u0003",
-    "\u0017\u0003\u0017\u0003\u0017\u0007\u0017\u00c5\n\u0017\f\u0017\u000e",
-    "\u0017\u00c8\u000b\u0017\u0005\u0017\u00ca\n\u0017\u0003\u0017\u0003",
-    "\u0017\u0003\u0018\u0003\u0018\u0003\u0018\u0003\u0018\u0003\u0018\u0003",
-    "\u0018\u0003\u0018\u0003\u0018\u0003\u0018\u0003\u0018\u0003\u0018\u0003",
-    "\u0018\u0003\u0018\u0003\u0018\u0003\u0018\u0003\u0018\u0003\u0018\u0005",
-    "\u0018\u00df\n\u0018\u0003\u0018\u0005\u0018\u00e2\n\u0018\u0003\u0018",
-    "\u0002\u0002\u0019\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016",
-    "\u0018\u001a\u001c\u001e \"$&(*,.\u0002\u0007\u0003\u0002\u0016\u0017",
-    "\u0003\u0002\u0018\u001b\u0003\u0002\u001c\u001d\u0003\u0002\u001e\u001f",
-    "\u0004\u0002\u001d\u001d  \u0002\u00f1\u00025\u0003\u0002\u0002\u0002",
-    "\u00048\u0003\u0002\u0002\u0002\u0006E\u0003\u0002\u0002\u0002\bJ\u0003",
-    "\u0002\u0002\u0002\n]\u0003\u0002\u0002\u0002\f_\u0003\u0002\u0002\u0002",
-    "\u000ec\u0003\u0002\u0002\u0002\u0010f\u0003\u0002\u0002\u0002\u0012",
-    "o\u0003\u0002\u0002\u0002\u0014|\u0003\u0002\u0002\u0002\u0016\u0084",
-    "\u0003\u0002\u0002\u0002\u0018\u008c\u0003\u0002\u0002\u0002\u001a\u0091",
-    "\u0003\u0002\u0002\u0002\u001c\u0096\u0003\u0002\u0002\u0002\u001e\u009b",
-    "\u0003\u0002\u0002\u0002 \u00a0\u0003\u0002\u0002\u0002\"\u00a5\u0003",
-    "\u0002\u0002\u0002$\u00aa\u0003\u0002\u0002\u0002&\u00b0\u0003\u0002",
-    "\u0002\u0002(\u00b4\u0003\u0002\u0002\u0002*\u00be\u0003\u0002\u0002",
-    "\u0002,\u00c0\u0003\u0002\u0002\u0002.\u00e1\u0003\u0002\u0002\u0002",
-    "04\u0005\u0006\u0004\u000214\u0005\u0004\u0003\u000224\u0005\n\u0006",
-    "\u000230\u0003\u0002\u0002\u000231\u0003\u0002\u0002\u000232\u0003\u0002",
-    "\u0002\u000247\u0003\u0002\u0002\u000253\u0003\u0002\u0002\u000256\u0003",
-    "\u0002\u0002\u00026\u0003\u0003\u0002\u0002\u000275\u0003\u0002\u0002",
-    "\u000289\u0007\u0003\u0002\u00029:\u0007\u0004\u0002\u0002:;\u0007(",
-    "\u0002\u0002;@\u0007\u0005\u0002\u0002<?\u0005\u0006\u0004\u0002=?\u0005",
-    "\n\u0006\u0002><\u0003\u0002\u0002\u0002>=\u0003\u0002\u0002\u0002?",
-    "B\u0003\u0002\u0002\u0002@>\u0003\u0002\u0002\u0002@A\u0003\u0002\u0002",
-    "\u0002AC\u0003\u0002\u0002\u0002B@\u0003\u0002\u0002\u0002CD\u0007\u0006",
-    "\u0002\u0002D\u0005\u0003\u0002\u0002\u0002EF\u0007(\u0002\u0002FG\u0005",
-    "\b\u0005\u0002GH\u0007\u0007\u0002\u0002HI\u0005\n\u0006\u0002I\u0007",
-    "\u0003\u0002\u0002\u0002JS\u0007\b\u0002\u0002KP\u0007(\u0002\u0002",
-    "LM\u0007\t\u0002\u0002MO\u0007(\u0002\u0002NL\u0003\u0002\u0002\u0002",
-    "OR\u0003\u0002\u0002\u0002PN\u0003\u0002\u0002\u0002PQ\u0003\u0002\u0002",
-    "\u0002QT\u0003\u0002\u0002\u0002RP\u0003\u0002\u0002\u0002SK\u0003\u0002",
-    "\u0002\u0002ST\u0003\u0002\u0002\u0002TU\u0003\u0002\u0002\u0002UV\u0007",
-    "\n\u0002\u0002V\t\u0003\u0002\u0002\u0002W^\u0005\u0016\f\u0002X^\u0005",
-    "\u0010\t\u0002Y^\u0005\u000e\b\u0002Z^\u0005\u0012\n\u0002[^\u0005\u0014",
-    "\u000b\u0002\\^\u0005\f\u0007\u0002]W\u0003\u0002\u0002\u0002]X\u0003",
-    "\u0002\u0002\u0002]Y\u0003\u0002\u0002\u0002]Z\u0003\u0002\u0002\u0002",
-    "][\u0003\u0002\u0002\u0002]\\\u0003\u0002\u0002\u0002^\u000b\u0003\u0002",
-    "\u0002\u0002_a\u0007\u000b\u0002\u0002`b\u0005\u0018\r\u0002a`\u0003",
-    "\u0002\u0002\u0002ab\u0003\u0002\u0002\u0002b\r\u0003\u0002\u0002\u0002",
-    "cd\u0005\u0018\r\u0002de\u0007\f\u0002\u0002e\u000f\u0003\u0002\u0002",
-    "\u0002fj\u0007\u0005\u0002\u0002gi\u0005\n\u0006\u0002hg\u0003\u0002",
-    "\u0002\u0002il\u0003\u0002\u0002\u0002jh\u0003\u0002\u0002\u0002jk\u0003",
-    "\u0002\u0002\u0002km\u0003\u0002\u0002\u0002lj\u0003\u0002\u0002\u0002",
-    "mn\u0007\u0006\u0002\u0002n\u0011\u0003\u0002\u0002\u0002op\u0007\r",
-    "\u0002\u0002pq\u0007\b\u0002\u0002qr\u0005\u0018\r\u0002rs\u0007\n\u0002",
-    "\u0002st\u0007\u000e\u0002\u0002tu\u0007\u000f\u0002\u0002uv\u0007\u0010",
-    "\u0002\u0002vz\u0005\u0010\t\u0002wx\u0007\u0011\u0002\u0002xy\u0007",
-    "\u0012\u0002\u0002y{\u0005\u0010\t\u0002zw\u0003\u0002\u0002\u0002z",
-    "{\u0003\u0002\u0002\u0002{\u0013\u0003\u0002\u0002\u0002|}\u0007\u0013",
-    "\u0002\u0002}\u007f\u0007\b\u0002\u0002~\u0080\u0005\u0018\r\u0002\u007f",
-    "~\u0003\u0002\u0002\u0002\u007f\u0080\u0003\u0002\u0002\u0002\u0080",
-    "\u0081\u0003\u0002\u0002\u0002\u0081\u0082\u0007\n\u0002\u0002\u0082",
-    "\u0083\u0007\f\u0002\u0002\u0083\u0015\u0003\u0002\u0002\u0002\u0084",
-    "\u0085\u0007\u0014\u0002\u0002\u0085\u0086\u0007\b\u0002\u0002\u0086",
-    "\u0087\u0005\u0018\r\u0002\u0087\u0088\u0007\n\u0002\u0002\u0088\u0089",
-    "\u0007\u000e\u0002\u0002\u0089\u008a\u0007\u000f\u0002\u0002\u008a\u008b",
-    "\u0005\u0010\t\u0002\u008b\u0017\u0003\u0002\u0002\u0002\u008c\u008f",
-    "\u0005\u001a\u000e\u0002\u008d\u008e\u0007\u0007\u0002\u0002\u008e\u0090",
-    "\u0005\u0018\r\u0002\u008f\u008d\u0003\u0002\u0002\u0002\u008f\u0090",
-    "\u0003\u0002\u0002\u0002\u0090\u0019\u0003\u0002\u0002\u0002\u0091\u0094",
-    "\u0005\u001c\u000f\u0002\u0092\u0093\u0007\u0011\u0002\u0002\u0093\u0095",
-    "\u0005\u001c\u000f\u0002\u0094\u0092\u0003\u0002\u0002\u0002\u0094\u0095",
-    "\u0003\u0002\u0002\u0002\u0095\u001b\u0003\u0002\u0002\u0002\u0096\u0099",
-    "\u0005\u001e\u0010\u0002\u0097\u0098\u0007\u0015\u0002\u0002\u0098\u009a",
-    "\u0005\u001e\u0010\u0002\u0099\u0097\u0003\u0002\u0002\u0002\u0099\u009a",
-    "\u0003\u0002\u0002\u0002\u009a\u001d\u0003\u0002\u0002\u0002\u009b\u009e",
-    "\u0005 \u0011\u0002\u009c\u009d\t\u0002\u0002\u0002\u009d\u009f\u0005",
-    " \u0011\u0002\u009e\u009c\u0003\u0002\u0002\u0002\u009e\u009f\u0003",
-    "\u0002\u0002\u0002\u009f\u001f\u0003\u0002\u0002\u0002\u00a0\u00a3\u0005",
-    "\"\u0012\u0002\u00a1\u00a2\t\u0003\u0002\u0002\u00a2\u00a4\u0005\"\u0012",
-    "\u0002\u00a3\u00a1\u0003\u0002\u0002\u0002\u00a3\u00a4\u0003\u0002\u0002",
-    "\u0002\u00a4!\u0003\u0002\u0002\u0002\u00a5\u00a8\u0005$\u0013\u0002",
-    "\u00a6\u00a7\t\u0004\u0002\u0002\u00a7\u00a9\u0005$\u0013\u0002\u00a8",
-    "\u00a6\u0003\u0002\u0002\u0002\u00a8\u00a9\u0003\u0002\u0002\u0002\u00a9",
-    "#\u0003\u0002\u0002\u0002\u00aa\u00ad\u0005&\u0014\u0002\u00ab\u00ac",
-    "\t\u0005\u0002\u0002\u00ac\u00ae\u0005&\u0014\u0002\u00ad\u00ab\u0003",
-    "\u0002\u0002\u0002\u00ad\u00ae\u0003\u0002\u0002\u0002\u00ae%\u0003",
-    "\u0002\u0002\u0002\u00af\u00b1\t\u0006\u0002\u0002\u00b0\u00af\u0003",
-    "\u0002\u0002\u0002\u00b0\u00b1\u0003\u0002\u0002\u0002\u00b1\u00b2\u0003",
-    "\u0002\u0002\u0002\u00b2\u00b3\u0005(\u0015\u0002\u00b3\'\u0003\u0002",
-    "\u0002\u0002\u00b4\u00b8\u0005.\u0018\u0002\u00b5\u00b7\u0005*\u0016",
-    "\u0002\u00b6\u00b5\u0003\u0002\u0002\u0002\u00b7\u00ba\u0003\u0002\u0002",
-    "\u0002\u00b8\u00b6\u0003\u0002\u0002\u0002\u00b8\u00b9\u0003\u0002\u0002",
-    "\u0002\u00b9)\u0003\u0002\u0002\u0002\u00ba\u00b8\u0003\u0002\u0002",
-    "\u0002\u00bb\u00bc\u0007!\u0002\u0002\u00bc\u00bf\u0007(\u0002\u0002",
-    "\u00bd\u00bf\u0005,\u0017\u0002\u00be\u00bb\u0003\u0002\u0002\u0002",
-    "\u00be\u00bd\u0003\u0002\u0002\u0002\u00bf+\u0003\u0002\u0002\u0002",
-    "\u00c0\u00c9\u0007\b\u0002\u0002\u00c1\u00c6\u0005\u0018\r\u0002\u00c2",
-    "\u00c3\u0007\t\u0002\u0002\u00c3\u00c5\u0005\u0018\r\u0002\u00c4\u00c2",
-    "\u0003\u0002\u0002\u0002\u00c5\u00c8\u0003\u0002\u0002\u0002\u00c6\u00c4",
-    "\u0003\u0002\u0002\u0002\u00c6\u00c7\u0003\u0002\u0002\u0002\u00c7\u00ca",
-    "\u0003\u0002\u0002\u0002\u00c8\u00c6\u0003\u0002\u0002\u0002\u00c9\u00c1",
-    "\u0003\u0002\u0002\u0002\u00c9\u00ca\u0003\u0002\u0002\u0002\u00ca\u00cb",
-    "\u0003\u0002\u0002\u0002\u00cb\u00cc\u0007\n\u0002\u0002\u00cc-\u0003",
-    "\u0002\u0002\u0002\u00cd\u00ce\u0007\b\u0002\u0002\u00ce\u00cf\u0005",
-    "\u0018\r\u0002\u00cf\u00d0\u0007\n\u0002\u0002\u00d0\u00e2\u0003\u0002",
-    "\u0002\u0002\u00d1\u00e2\u0007)\u0002\u0002\u00d2\u00e2\u0007\u000f",
-    "\u0002\u0002\u00d3\u00e2\u0007\"\u0002\u0002\u00d4\u00e2\u0007\'\u0002",
-    "\u0002\u00d5\u00e2\u0007#\u0002\u0002\u00d6\u00e2\u0007(\u0002\u0002",
-    "\u00d7\u00d8\u0007$\u0002\u0002\u00d8\u00e2\u0007(\u0002\u0002\u00d9",
-    "\u00de\u0007%\u0002\u0002\u00da\u00db\u0005\u0018\r\u0002\u00db\u00dc",
-    "\u0007\t\u0002\u0002\u00dc\u00dd\u0005\u0018\r\u0002\u00dd\u00df\u0003",
-    "\u0002\u0002\u0002\u00de\u00da\u0003\u0002\u0002\u0002\u00de\u00df\u0003",
-    "\u0002\u0002\u0002\u00df\u00e0\u0003\u0002\u0002\u0002\u00e0\u00e2\u0007",
-    "&\u0002\u0002\u00e1\u00cd\u0003\u0002\u0002\u0002\u00e1\u00d1\u0003",
-    "\u0002\u0002\u0002\u00e1\u00d2\u0003\u0002\u0002\u0002\u00e1\u00d3\u0003",
-    "\u0002\u0002\u0002\u00e1\u00d4\u0003\u0002\u0002\u0002\u00e1\u00d5\u0003",
-    "\u0002\u0002\u0002\u00e1\u00d6\u0003\u0002\u0002\u0002\u00e1\u00d7\u0003",
-    "\u0002\u0002\u0002\u00e1\u00d9\u0003\u0002\u0002\u0002\u00e2/\u0003",
-    "\u0002\u0002\u0002\u001b35>@PS]ajz\u007f\u008f\u0094\u0099\u009e\u00a3",
-    "\u00a8\u00ad\u00b0\u00b8\u00be\u00c6\u00c9\u00de\u00e1"].join("");
+    "\u0018\t\u0018\u0004\u0019\t\u0019\u0004\u001a\t\u001a\u0004\u001b\t",
+    "\u001b\u0004\u001c\t\u001c\u0003\u0002\u0003\u0002\u0003\u0002\u0007",
+    "\u0002<\n\u0002\f\u0002\u000e\u0002?\u000b\u0002\u0003\u0003\u0003\u0003",
+    "\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0007\u0003G\n\u0003",
+    "\f\u0003\u000e\u0003J\u000b\u0003\u0003\u0003\u0003\u0003\u0003\u0004",
+    "\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0005\u0003\u0005",
+    "\u0003\u0005\u0003\u0005\u0007\u0005W\n\u0005\f\u0005\u000e\u0005Z\u000b",
+    "\u0005\u0005\u0005\\\n\u0005\u0003\u0005\u0003\u0005\u0003\u0006\u0003",
+    "\u0006\u0003\u0006\u0003\u0006\u0003\u0006\u0003\u0006\u0005\u0006f",
+    "\n\u0006\u0003\u0007\u0003\u0007\u0005\u0007j\n\u0007\u0003\b\u0003",
+    "\b\u0003\b\u0003\t\u0003\t\u0007\tq\n\t\f\t\u000e\tt\u000b\t\u0003\t",
+    "\u0003\t\u0003\n\u0003\n\u0003\n\u0003\n\u0003\n\u0003\n\u0003\n\u0003",
+    "\n\u0003\n\u0003\n\u0003\n\u0005\n\u0083\n\n\u0003\u000b\u0003\u000b",
+    "\u0003\u000b\u0005\u000b\u0088\n\u000b\u0003\u000b\u0003\u000b\u0003",
+    "\u000b\u0003\f\u0003\f\u0003\f\u0003\f\u0003\f\u0003\f\u0003\f\u0003",
+    "\f\u0003\r\u0003\r\u0003\r\u0005\r\u0098\n\r\u0003\u000e\u0003\u000e",
+    "\u0003\u000e\u0007\u000e\u009d\n\u000e\f\u000e\u000e\u000e\u00a0\u000b",
+    "\u000e\u0003\u000f\u0003\u000f\u0003\u000f\u0007\u000f\u00a5\n\u000f",
+    "\f\u000f\u000e\u000f\u00a8\u000b\u000f\u0003\u0010\u0003\u0010\u0003",
+    "\u0010\u0003\u0010\u0007\u0010\u00ae\n\u0010\f\u0010\u000e\u0010\u00b1",
+    "\u000b\u0010\u0003\u0011\u0003\u0011\u0003\u0012\u0003\u0012\u0003\u0012",
+    "\u0003\u0012\u0007\u0012\u00b9\n\u0012\f\u0012\u000e\u0012\u00bc\u000b",
+    "\u0012\u0003\u0013\u0003\u0013\u0003\u0014\u0003\u0014\u0003\u0014\u0003",
+    "\u0014\u0007\u0014\u00c4\n\u0014\f\u0014\u000e\u0014\u00c7\u000b\u0014",
+    "\u0003\u0015\u0003\u0015\u0003\u0016\u0003\u0016\u0003\u0016\u0003\u0016",
+    "\u0007\u0016\u00cf\n\u0016\f\u0016\u000e\u0016\u00d2\u000b\u0016\u0003",
+    "\u0017\u0003\u0017\u0003\u0018\u0005\u0018\u00d7\n\u0018\u0003\u0018",
+    "\u0003\u0018\u0003\u0019\u0003\u0019\u0007\u0019\u00dd\n\u0019\f\u0019",
+    "\u000e\u0019\u00e0\u000b\u0019\u0003\u001a\u0003\u001a\u0003\u001a\u0005",
+    "\u001a\u00e5\n\u001a\u0003\u001b\u0003\u001b\u0003\u001b\u0003\u001b",
+    "\u0007\u001b\u00eb\n\u001b\f\u001b\u000e\u001b\u00ee\u000b\u001b\u0005",
+    "\u001b\u00f0\n\u001b\u0003\u001b\u0003\u001b\u0003\u001c\u0003\u001c",
+    "\u0003\u001c\u0003\u001c\u0003\u001c\u0003\u001c\u0003\u001c\u0003\u001c",
+    "\u0003\u001c\u0003\u001c\u0003\u001c\u0003\u001c\u0003\u001c\u0003\u001c",
+    "\u0003\u001c\u0003\u001c\u0003\u001c\u0005\u001c\u0105\n\u001c\u0003",
+    "\u001c\u0005\u001c\u0108\n\u001c\u0003\u001c\u0002\u0002\u001d\u0002",
+    "\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016\u0018\u001a\u001c\u001e",
+    " \"$&(*,.0246\u0002\u0007\u0003\u0002\u0016\u0017\u0003\u0002\u0018",
+    "\u001b\u0003\u0002\u001c\u001d\u0003\u0002\u001e\u001f\u0004\u0002\u001d",
+    "\u001d  \u0002\u0113\u0002=\u0003\u0002\u0002\u0002\u0004@\u0003\u0002",
+    "\u0002\u0002\u0006M\u0003\u0002\u0002\u0002\bR\u0003\u0002\u0002\u0002",
+    "\ne\u0003\u0002\u0002\u0002\fg\u0003\u0002\u0002\u0002\u000ek\u0003",
+    "\u0002\u0002\u0002\u0010n\u0003\u0002\u0002\u0002\u0012w\u0003\u0002",
+    "\u0002\u0002\u0014\u0084\u0003\u0002\u0002\u0002\u0016\u008c\u0003\u0002",
+    "\u0002\u0002\u0018\u0094\u0003\u0002\u0002\u0002\u001a\u0099\u0003\u0002",
+    "\u0002\u0002\u001c\u00a1\u0003\u0002\u0002\u0002\u001e\u00a9\u0003\u0002",
+    "\u0002\u0002 \u00b2\u0003\u0002\u0002\u0002\"\u00b4\u0003\u0002\u0002",
+    "\u0002$\u00bd\u0003\u0002\u0002\u0002&\u00bf\u0003\u0002\u0002\u0002",
+    "(\u00c8\u0003\u0002\u0002\u0002*\u00ca\u0003\u0002\u0002\u0002,\u00d3",
+    "\u0003\u0002\u0002\u0002.\u00d6\u0003\u0002\u0002\u00020\u00da\u0003",
+    "\u0002\u0002\u00022\u00e4\u0003\u0002\u0002\u00024\u00e6\u0003\u0002",
+    "\u0002\u00026\u0107\u0003\u0002\u0002\u00028<\u0005\u0006\u0004\u0002",
+    "9<\u0005\u0004\u0003\u0002:<\u0005\n\u0006\u0002;8\u0003\u0002\u0002",
+    "\u0002;9\u0003\u0002\u0002\u0002;:\u0003\u0002\u0002\u0002<?\u0003\u0002",
+    "\u0002\u0002=;\u0003\u0002\u0002\u0002=>\u0003\u0002\u0002\u0002>\u0003",
+    "\u0003\u0002\u0002\u0002?=\u0003\u0002\u0002\u0002@A\u0007\u0003\u0002",
+    "\u0002AB\u0007\u0004\u0002\u0002BC\u0007(\u0002\u0002CH\u0007\u0005",
+    "\u0002\u0002DG\u0005\u0006\u0004\u0002EG\u0005\n\u0006\u0002FD\u0003",
+    "\u0002\u0002\u0002FE\u0003\u0002\u0002\u0002GJ\u0003\u0002\u0002\u0002",
+    "HF\u0003\u0002\u0002\u0002HI\u0003\u0002\u0002\u0002IK\u0003\u0002\u0002",
+    "\u0002JH\u0003\u0002\u0002\u0002KL\u0007\u0006\u0002\u0002L\u0005\u0003",
+    "\u0002\u0002\u0002MN\u0007(\u0002\u0002NO\u0005\b\u0005\u0002OP\u0007",
+    "\u0007\u0002\u0002PQ\u0005\n\u0006\u0002Q\u0007\u0003\u0002\u0002\u0002",
+    "R[\u0007\b\u0002\u0002SX\u0007(\u0002\u0002TU\u0007\t\u0002\u0002UW",
+    "\u0007(\u0002\u0002VT\u0003\u0002\u0002\u0002WZ\u0003\u0002\u0002\u0002",
+    "XV\u0003\u0002\u0002\u0002XY\u0003\u0002\u0002\u0002Y\\\u0003\u0002",
+    "\u0002\u0002ZX\u0003\u0002\u0002\u0002[S\u0003\u0002\u0002\u0002[\\",
+    "\u0003\u0002\u0002\u0002\\]\u0003\u0002\u0002\u0002]^\u0007\n\u0002",
+    "\u0002^\t\u0003\u0002\u0002\u0002_f\u0005\u0016\f\u0002`f\u0005\u0010",
+    "\t\u0002af\u0005\u000e\b\u0002bf\u0005\u0012\n\u0002cf\u0005\u0014\u000b",
+    "\u0002df\u0005\f\u0007\u0002e_\u0003\u0002\u0002\u0002e`\u0003\u0002",
+    "\u0002\u0002ea\u0003\u0002\u0002\u0002eb\u0003\u0002\u0002\u0002ec\u0003",
+    "\u0002\u0002\u0002ed\u0003\u0002\u0002\u0002f\u000b\u0003\u0002\u0002",
+    "\u0002gi\u0007\u000b\u0002\u0002hj\u0005\u0018\r\u0002ih\u0003\u0002",
+    "\u0002\u0002ij\u0003\u0002\u0002\u0002j\r\u0003\u0002\u0002\u0002kl",
+    "\u0005\u0018\r\u0002lm\u0007\f\u0002\u0002m\u000f\u0003\u0002\u0002",
+    "\u0002nr\u0007\u0005\u0002\u0002oq\u0005\n\u0006\u0002po\u0003\u0002",
+    "\u0002\u0002qt\u0003\u0002\u0002\u0002rp\u0003\u0002\u0002\u0002rs\u0003",
+    "\u0002\u0002\u0002su\u0003\u0002\u0002\u0002tr\u0003\u0002\u0002\u0002",
+    "uv\u0007\u0006\u0002\u0002v\u0011\u0003\u0002\u0002\u0002wx\u0007\r",
+    "\u0002\u0002xy\u0007\b\u0002\u0002yz\u0005\u0018\r\u0002z{\u0007\n\u0002",
+    "\u0002{|\u0007\u000e\u0002\u0002|}\u0007\u000f\u0002\u0002}~\u0007\u0010",
+    "\u0002\u0002~\u0082\u0005\u0010\t\u0002\u007f\u0080\u0007\u0011\u0002",
+    "\u0002\u0080\u0081\u0007\u0012\u0002\u0002\u0081\u0083\u0005\u0010\t",
+    "\u0002\u0082\u007f\u0003\u0002\u0002\u0002\u0082\u0083\u0003\u0002\u0002",
+    "\u0002\u0083\u0013\u0003\u0002\u0002\u0002\u0084\u0085\u0007\u0013\u0002",
+    "\u0002\u0085\u0087\u0007\b\u0002\u0002\u0086\u0088\u0005\u0018\r\u0002",
+    "\u0087\u0086\u0003\u0002\u0002\u0002\u0087\u0088\u0003\u0002\u0002\u0002",
+    "\u0088\u0089\u0003\u0002\u0002\u0002\u0089\u008a\u0007\n\u0002\u0002",
+    "\u008a\u008b\u0007\f\u0002\u0002\u008b\u0015\u0003\u0002\u0002\u0002",
+    "\u008c\u008d\u0007\u0014\u0002\u0002\u008d\u008e\u0007\b\u0002\u0002",
+    "\u008e\u008f\u0005\u0018\r\u0002\u008f\u0090\u0007\n\u0002\u0002\u0090",
+    "\u0091\u0007\u000e\u0002\u0002\u0091\u0092\u0007\u000f\u0002\u0002\u0092",
+    "\u0093\u0005\u0010\t\u0002\u0093\u0017\u0003\u0002\u0002\u0002\u0094",
+    "\u0097\u0005\u001a\u000e\u0002\u0095\u0096\u0007\u0007\u0002\u0002\u0096",
+    "\u0098\u0005\u0018\r\u0002\u0097\u0095\u0003\u0002\u0002\u0002\u0097",
+    "\u0098\u0003\u0002\u0002\u0002\u0098\u0019\u0003\u0002\u0002\u0002\u0099",
+    "\u009e\u0005\u001c\u000f\u0002\u009a\u009b\u0007\u0011\u0002\u0002\u009b",
+    "\u009d\u0005\u001c\u000f\u0002\u009c\u009a\u0003\u0002\u0002\u0002\u009d",
+    "\u00a0\u0003\u0002\u0002\u0002\u009e\u009c\u0003\u0002\u0002\u0002\u009e",
+    "\u009f\u0003\u0002\u0002\u0002\u009f\u001b\u0003\u0002\u0002\u0002\u00a0",
+    "\u009e\u0003\u0002\u0002\u0002\u00a1\u00a6\u0005\u001e\u0010\u0002\u00a2",
+    "\u00a3\u0007\u0015\u0002\u0002\u00a3\u00a5\u0005\u001e\u0010\u0002\u00a4",
+    "\u00a2\u0003\u0002\u0002\u0002\u00a5\u00a8\u0003\u0002\u0002\u0002\u00a6",
+    "\u00a4\u0003\u0002\u0002\u0002\u00a6\u00a7\u0003\u0002\u0002\u0002\u00a7",
+    "\u001d\u0003\u0002\u0002\u0002\u00a8\u00a6\u0003\u0002\u0002\u0002\u00a9",
+    "\u00af\u0005\"\u0012\u0002\u00aa\u00ab\u0005 \u0011\u0002\u00ab\u00ac",
+    "\u0005\"\u0012\u0002\u00ac\u00ae\u0003\u0002\u0002\u0002\u00ad\u00aa",
+    "\u0003\u0002\u0002\u0002\u00ae\u00b1\u0003\u0002\u0002\u0002\u00af\u00ad",
+    "\u0003\u0002\u0002\u0002\u00af\u00b0\u0003\u0002\u0002\u0002\u00b0\u001f",
+    "\u0003\u0002\u0002\u0002\u00b1\u00af\u0003\u0002\u0002\u0002\u00b2\u00b3",
+    "\t\u0002\u0002\u0002\u00b3!\u0003\u0002\u0002\u0002\u00b4\u00ba\u0005",
+    "&\u0014\u0002\u00b5\u00b6\u0005$\u0013\u0002\u00b6\u00b7\u0005&\u0014",
+    "\u0002\u00b7\u00b9\u0003\u0002\u0002\u0002\u00b8\u00b5\u0003\u0002\u0002",
+    "\u0002\u00b9\u00bc\u0003\u0002\u0002\u0002\u00ba\u00b8\u0003\u0002\u0002",
+    "\u0002\u00ba\u00bb\u0003\u0002\u0002\u0002\u00bb#\u0003\u0002\u0002",
+    "\u0002\u00bc\u00ba\u0003\u0002\u0002\u0002\u00bd\u00be\t\u0003\u0002",
+    "\u0002\u00be%\u0003\u0002\u0002\u0002\u00bf\u00c5\u0005*\u0016\u0002",
+    "\u00c0\u00c1\u0005(\u0015\u0002\u00c1\u00c2\u0005*\u0016\u0002\u00c2",
+    "\u00c4\u0003\u0002\u0002\u0002\u00c3\u00c0\u0003\u0002\u0002\u0002\u00c4",
+    "\u00c7\u0003\u0002\u0002\u0002\u00c5\u00c3\u0003\u0002\u0002\u0002\u00c5",
+    "\u00c6\u0003\u0002\u0002\u0002\u00c6\'\u0003\u0002\u0002\u0002\u00c7",
+    "\u00c5\u0003\u0002\u0002\u0002\u00c8\u00c9\t\u0004\u0002\u0002\u00c9",
+    ")\u0003\u0002\u0002\u0002\u00ca\u00d0\u0005.\u0018\u0002\u00cb\u00cc",
+    "\u0005,\u0017\u0002\u00cc\u00cd\u0005.\u0018\u0002\u00cd\u00cf\u0003",
+    "\u0002\u0002\u0002\u00ce\u00cb\u0003\u0002\u0002\u0002\u00cf\u00d2\u0003",
+    "\u0002\u0002\u0002\u00d0\u00ce\u0003\u0002\u0002\u0002\u00d0\u00d1\u0003",
+    "\u0002\u0002\u0002\u00d1+\u0003\u0002\u0002\u0002\u00d2\u00d0\u0003",
+    "\u0002\u0002\u0002\u00d3\u00d4\t\u0005\u0002\u0002\u00d4-\u0003\u0002",
+    "\u0002\u0002\u00d5\u00d7\t\u0006\u0002\u0002\u00d6\u00d5\u0003\u0002",
+    "\u0002\u0002\u00d6\u00d7\u0003\u0002\u0002\u0002\u00d7\u00d8\u0003\u0002",
+    "\u0002\u0002\u00d8\u00d9\u00050\u0019\u0002\u00d9/\u0003\u0002\u0002",
+    "\u0002\u00da\u00de\u00056\u001c\u0002\u00db\u00dd\u00052\u001a\u0002",
+    "\u00dc\u00db\u0003\u0002\u0002\u0002\u00dd\u00e0\u0003\u0002\u0002\u0002",
+    "\u00de\u00dc\u0003\u0002\u0002\u0002\u00de\u00df\u0003\u0002\u0002\u0002",
+    "\u00df1\u0003\u0002\u0002\u0002\u00e0\u00de\u0003\u0002\u0002\u0002",
+    "\u00e1\u00e2\u0007!\u0002\u0002\u00e2\u00e5\u0007(\u0002\u0002\u00e3",
+    "\u00e5\u00054\u001b\u0002\u00e4\u00e1\u0003\u0002\u0002\u0002\u00e4",
+    "\u00e3\u0003\u0002\u0002\u0002\u00e53\u0003\u0002\u0002\u0002\u00e6",
+    "\u00ef\u0007\b\u0002\u0002\u00e7\u00ec\u0005\u0018\r\u0002\u00e8\u00e9",
+    "\u0007\t\u0002\u0002\u00e9\u00eb\u0005\u0018\r\u0002\u00ea\u00e8\u0003",
+    "\u0002\u0002\u0002\u00eb\u00ee\u0003\u0002\u0002\u0002\u00ec\u00ea\u0003",
+    "\u0002\u0002\u0002\u00ec\u00ed\u0003\u0002\u0002\u0002\u00ed\u00f0\u0003",
+    "\u0002\u0002\u0002\u00ee\u00ec\u0003\u0002\u0002\u0002\u00ef\u00e7\u0003",
+    "\u0002\u0002\u0002\u00ef\u00f0\u0003\u0002\u0002\u0002\u00f0\u00f1\u0003",
+    "\u0002\u0002\u0002\u00f1\u00f2\u0007\n\u0002\u0002\u00f25\u0003\u0002",
+    "\u0002\u0002\u00f3\u00f4\u0007\b\u0002\u0002\u00f4\u00f5\u0005\u0018",
+    "\r\u0002\u00f5\u00f6\u0007\n\u0002\u0002\u00f6\u0108\u0003\u0002\u0002",
+    "\u0002\u00f7\u0108\u0007)\u0002\u0002\u00f8\u0108\u0007\u000f\u0002",
+    "\u0002\u00f9\u0108\u0007\"\u0002\u0002\u00fa\u0108\u0007\'\u0002\u0002",
+    "\u00fb\u0108\u0007#\u0002\u0002\u00fc\u0108\u0007(\u0002\u0002\u00fd",
+    "\u00fe\u0007$\u0002\u0002\u00fe\u0108\u0007(\u0002\u0002\u00ff\u0104",
+    "\u0007%\u0002\u0002\u0100\u0101\u0005\u0018\r\u0002\u0101\u0102\u0007",
+    "\t\u0002\u0002\u0102\u0103\u0005\u0018\r\u0002\u0103\u0105\u0003\u0002",
+    "\u0002\u0002\u0104\u0100\u0003\u0002\u0002\u0002\u0104\u0105\u0003\u0002",
+    "\u0002\u0002\u0105\u0106\u0003\u0002\u0002\u0002\u0106\u0108\u0007&",
+    "\u0002\u0002\u0107\u00f3\u0003\u0002\u0002\u0002\u0107\u00f7\u0003\u0002",
+    "\u0002\u0002\u0107\u00f8\u0003\u0002\u0002\u0002\u0107\u00f9\u0003\u0002",
+    "\u0002\u0002\u0107\u00fa\u0003\u0002\u0002\u0002\u0107\u00fb\u0003\u0002",
+    "\u0002\u0002\u0107\u00fc\u0003\u0002\u0002\u0002\u0107\u00fd\u0003\u0002",
+    "\u0002\u0002\u0107\u00ff\u0003\u0002\u0002\u0002\u01087\u0003\u0002",
+    "\u0002\u0002\u001b;=FHX[eir\u0082\u0087\u0097\u009e\u00a6\u00af\u00ba",
+    "\u00c5\u00d0\u00d6\u00de\u00e4\u00ec\u00ef\u0104\u0107"].join("");
 
 
 var atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
@@ -175,9 +200,10 @@ var symbolicNames = [ null, null, null, null, null, null, null, null, null,
 var ruleNames =  [ "program", "classDecls", "funDecl", "parameter", "stmt", 
                    "retStmt", "expStmt", "blockStmt", "ifStmt", "printStmt", 
                    "iterationStmt", "expression", "logORExpression", "logANDExpression", 
-                   "eqExpression", "relExpression", "addExpression", "multExpression", 
-                   "unaryExpression", "callMemExpression", "callMemHelperExpression", 
-                   "arguments", "primaryExpression" ];
+                   "eqExpression", "eqOp", "relExpression", "relOp", "addExpression", 
+                   "addOp", "multExpression", "multOp", "unaryExpression", 
+                   "callMemExpression", "callMemHelperExpression", "arguments", 
+                   "primaryExpression" ];
 
 function tofuParser (input) {
 	antlr4.Parser.call(this, input);
@@ -255,14 +281,18 @@ tofuParser.RULE_expression = 11;
 tofuParser.RULE_logORExpression = 12;
 tofuParser.RULE_logANDExpression = 13;
 tofuParser.RULE_eqExpression = 14;
-tofuParser.RULE_relExpression = 15;
-tofuParser.RULE_addExpression = 16;
-tofuParser.RULE_multExpression = 17;
-tofuParser.RULE_unaryExpression = 18;
-tofuParser.RULE_callMemExpression = 19;
-tofuParser.RULE_callMemHelperExpression = 20;
-tofuParser.RULE_arguments = 21;
-tofuParser.RULE_primaryExpression = 22;
+tofuParser.RULE_eqOp = 15;
+tofuParser.RULE_relExpression = 16;
+tofuParser.RULE_relOp = 17;
+tofuParser.RULE_addExpression = 18;
+tofuParser.RULE_addOp = 19;
+tofuParser.RULE_multExpression = 20;
+tofuParser.RULE_multOp = 21;
+tofuParser.RULE_unaryExpression = 22;
+tofuParser.RULE_callMemExpression = 23;
+tofuParser.RULE_callMemHelperExpression = 24;
+tofuParser.RULE_arguments = 25;
+tofuParser.RULE_primaryExpression = 26;
 
 
 function ProgramContext(parser, parent, invokingState) {
@@ -338,31 +368,31 @@ tofuParser.prototype.program = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 51;
+        this.state = 59;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << tofuParser.T__0) | (1 << tofuParser.T__2) | (1 << tofuParser.T__5) | (1 << tofuParser.T__8) | (1 << tofuParser.T__10) | (1 << tofuParser.T__12) | (1 << tofuParser.T__16) | (1 << tofuParser.T__17) | (1 << tofuParser.T__26) | (1 << tofuParser.T__29))) !== 0) || ((((_la - 32)) & ~0x1f) == 0 && ((1 << (_la - 32)) & ((1 << (tofuParser.T__31 - 32)) | (1 << (tofuParser.T__32 - 32)) | (1 << (tofuParser.T__33 - 32)) | (1 << (tofuParser.T__34 - 32)) | (1 << (tofuParser.STRING - 32)) | (1 << (tofuParser.IDENTIFIER - 32)) | (1 << (tofuParser.NUMBER - 32)))) !== 0)) {
-            this.state = 49;
+            this.state = 57;
             this._errHandler.sync(this);
             var la_ = this._interp.adaptivePredict(this._input,0,this._ctx);
             switch(la_) {
             case 1:
-                this.state = 46;
+                this.state = 54;
                 this.funDecl();
                 break;
 
             case 2:
-                this.state = 47;
+                this.state = 55;
                 this.classDecls();
                 break;
 
             case 3:
-                this.state = 48;
+                this.state = 56;
                 this.stmt();
                 break;
 
             }
-            this.state = 53;
+            this.state = 61;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
         }
@@ -447,38 +477,38 @@ tofuParser.prototype.classDecls = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 54;
-        this.match(tofuParser.T__0);
-        this.state = 55;
-        this.match(tofuParser.T__1);
-        this.state = 56;
-        this.match(tofuParser.IDENTIFIER);
-        this.state = 57;
-        this.match(tofuParser.T__2);
         this.state = 62;
+        this.match(tofuParser.T__0);
+        this.state = 63;
+        this.match(tofuParser.T__1);
+        this.state = 64;
+        this.match(tofuParser.IDENTIFIER);
+        this.state = 65;
+        this.match(tofuParser.T__2);
+        this.state = 70;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << tofuParser.T__2) | (1 << tofuParser.T__5) | (1 << tofuParser.T__8) | (1 << tofuParser.T__10) | (1 << tofuParser.T__12) | (1 << tofuParser.T__16) | (1 << tofuParser.T__17) | (1 << tofuParser.T__26) | (1 << tofuParser.T__29))) !== 0) || ((((_la - 32)) & ~0x1f) == 0 && ((1 << (_la - 32)) & ((1 << (tofuParser.T__31 - 32)) | (1 << (tofuParser.T__32 - 32)) | (1 << (tofuParser.T__33 - 32)) | (1 << (tofuParser.T__34 - 32)) | (1 << (tofuParser.STRING - 32)) | (1 << (tofuParser.IDENTIFIER - 32)) | (1 << (tofuParser.NUMBER - 32)))) !== 0)) {
-            this.state = 60;
+            this.state = 68;
             this._errHandler.sync(this);
             var la_ = this._interp.adaptivePredict(this._input,2,this._ctx);
             switch(la_) {
             case 1:
-                this.state = 58;
+                this.state = 66;
                 this.funDecl();
                 break;
 
             case 2:
-                this.state = 59;
+                this.state = 67;
                 this.stmt();
                 break;
 
             }
-            this.state = 64;
+            this.state = 72;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
         }
-        this.state = 65;
+        this.state = 73;
         this.match(tofuParser.T__3);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -546,13 +576,13 @@ tofuParser.prototype.funDecl = function() {
     this.enterRule(localctx, 4, tofuParser.RULE_funDecl);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 67;
+        this.state = 75;
         this.match(tofuParser.IDENTIFIER);
-        this.state = 68;
+        this.state = 76;
         this.parameter();
-        this.state = 69;
+        this.state = 77;
         this.match(tofuParser.T__4);
-        this.state = 70;
+        this.state = 78;
         this.stmt();
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -621,29 +651,29 @@ tofuParser.prototype.parameter = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 72;
+        this.state = 80;
         this.match(tofuParser.T__5);
-        this.state = 81;
+        this.state = 89;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         if(_la===tofuParser.IDENTIFIER) {
-            this.state = 73;
+            this.state = 81;
             this.match(tofuParser.IDENTIFIER);
-            this.state = 78;
+            this.state = 86;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
             while(_la===tofuParser.T__6) {
-                this.state = 74;
+                this.state = 82;
                 this.match(tofuParser.T__6);
-                this.state = 75;
+                this.state = 83;
                 this.match(tofuParser.IDENTIFIER);
-                this.state = 80;
+                this.state = 88;
                 this._errHandler.sync(this);
                 _la = this._input.LA(1);
             }
         }
 
-        this.state = 83;
+        this.state = 91;
         this.match(tofuParser.T__7);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -722,17 +752,17 @@ tofuParser.prototype.stmt = function() {
     var localctx = new StmtContext(this, this._ctx, this.state);
     this.enterRule(localctx, 8, tofuParser.RULE_stmt);
     try {
-        this.state = 91;
+        this.state = 99;
         this._errHandler.sync(this);
         switch(this._input.LA(1)) {
         case tofuParser.T__17:
             this.enterOuterAlt(localctx, 1);
-            this.state = 85;
+            this.state = 93;
             this.iterationStmt();
             break;
         case tofuParser.T__2:
             this.enterOuterAlt(localctx, 2);
-            this.state = 86;
+            this.state = 94;
             this.blockStmt();
             break;
         case tofuParser.T__5:
@@ -747,22 +777,22 @@ tofuParser.prototype.stmt = function() {
         case tofuParser.IDENTIFIER:
         case tofuParser.NUMBER:
             this.enterOuterAlt(localctx, 3);
-            this.state = 87;
+            this.state = 95;
             this.expStmt();
             break;
         case tofuParser.T__10:
             this.enterOuterAlt(localctx, 4);
-            this.state = 88;
+            this.state = 96;
             this.ifStmt();
             break;
         case tofuParser.T__16:
             this.enterOuterAlt(localctx, 5);
-            this.state = 89;
+            this.state = 97;
             this.printStmt();
             break;
         case tofuParser.T__8:
             this.enterOuterAlt(localctx, 6);
-            this.state = 90;
+            this.state = 98;
             this.retStmt();
             break;
         default:
@@ -826,13 +856,13 @@ tofuParser.prototype.retStmt = function() {
     this.enterRule(localctx, 10, tofuParser.RULE_retStmt);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 93;
+        this.state = 101;
         this.match(tofuParser.T__8);
-        this.state = 95;
+        this.state = 103;
         this._errHandler.sync(this);
         var la_ = this._interp.adaptivePredict(this._input,7,this._ctx);
         if(la_===1) {
-            this.state = 94;
+            this.state = 102;
             this.expression();
 
         }
@@ -894,9 +924,9 @@ tofuParser.prototype.expStmt = function() {
     this.enterRule(localctx, 12, tofuParser.RULE_expStmt);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 97;
+        this.state = 105;
         this.expression();
-        this.state = 98;
+        this.state = 106;
         this.match(tofuParser.T__9);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -964,19 +994,19 @@ tofuParser.prototype.blockStmt = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 100;
+        this.state = 108;
         this.match(tofuParser.T__2);
-        this.state = 104;
+        this.state = 112;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << tofuParser.T__2) | (1 << tofuParser.T__5) | (1 << tofuParser.T__8) | (1 << tofuParser.T__10) | (1 << tofuParser.T__12) | (1 << tofuParser.T__16) | (1 << tofuParser.T__17) | (1 << tofuParser.T__26) | (1 << tofuParser.T__29))) !== 0) || ((((_la - 32)) & ~0x1f) == 0 && ((1 << (_la - 32)) & ((1 << (tofuParser.T__31 - 32)) | (1 << (tofuParser.T__32 - 32)) | (1 << (tofuParser.T__33 - 32)) | (1 << (tofuParser.T__34 - 32)) | (1 << (tofuParser.STRING - 32)) | (1 << (tofuParser.IDENTIFIER - 32)) | (1 << (tofuParser.NUMBER - 32)))) !== 0)) {
-            this.state = 101;
+            this.state = 109;
             this.stmt();
-            this.state = 106;
+            this.state = 114;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
         }
-        this.state = 107;
+        this.state = 115;
         this.match(tofuParser.T__3);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1048,31 +1078,31 @@ tofuParser.prototype.ifStmt = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 109;
+        this.state = 117;
         this.match(tofuParser.T__10);
-        this.state = 110;
+        this.state = 118;
         this.match(tofuParser.T__5);
-        this.state = 111;
+        this.state = 119;
         this.expression();
-        this.state = 112;
-        this.match(tofuParser.T__7);
-        this.state = 113;
-        this.match(tofuParser.T__11);
-        this.state = 114;
-        this.match(tofuParser.T__12);
-        this.state = 115;
-        this.match(tofuParser.T__13);
-        this.state = 116;
-        this.blockStmt();
         this.state = 120;
+        this.match(tofuParser.T__7);
+        this.state = 121;
+        this.match(tofuParser.T__11);
+        this.state = 122;
+        this.match(tofuParser.T__12);
+        this.state = 123;
+        this.match(tofuParser.T__13);
+        this.state = 124;
+        this.blockStmt();
+        this.state = 128;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         if(_la===tofuParser.T__14) {
-            this.state = 117;
+            this.state = 125;
             this.match(tofuParser.T__14);
-            this.state = 118;
+            this.state = 126;
             this.match(tofuParser.T__15);
-            this.state = 119;
+            this.state = 127;
             this.blockStmt();
         }
 
@@ -1135,21 +1165,21 @@ tofuParser.prototype.printStmt = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 122;
+        this.state = 130;
         this.match(tofuParser.T__16);
-        this.state = 123;
+        this.state = 131;
         this.match(tofuParser.T__5);
-        this.state = 125;
+        this.state = 133;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         if((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << tofuParser.T__5) | (1 << tofuParser.T__12) | (1 << tofuParser.T__26) | (1 << tofuParser.T__29))) !== 0) || ((((_la - 32)) & ~0x1f) == 0 && ((1 << (_la - 32)) & ((1 << (tofuParser.T__31 - 32)) | (1 << (tofuParser.T__32 - 32)) | (1 << (tofuParser.T__33 - 32)) | (1 << (tofuParser.T__34 - 32)) | (1 << (tofuParser.STRING - 32)) | (1 << (tofuParser.IDENTIFIER - 32)) | (1 << (tofuParser.NUMBER - 32)))) !== 0)) {
-            this.state = 124;
+            this.state = 132;
             this.expression();
         }
 
-        this.state = 127;
+        this.state = 135;
         this.match(tofuParser.T__7);
-        this.state = 128;
+        this.state = 136;
         this.match(tofuParser.T__9);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1213,19 +1243,19 @@ tofuParser.prototype.iterationStmt = function() {
     this.enterRule(localctx, 20, tofuParser.RULE_iterationStmt);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 130;
+        this.state = 138;
         this.match(tofuParser.T__17);
-        this.state = 131;
+        this.state = 139;
         this.match(tofuParser.T__5);
-        this.state = 132;
+        this.state = 140;
         this.expression();
-        this.state = 133;
+        this.state = 141;
         this.match(tofuParser.T__7);
-        this.state = 134;
+        this.state = 142;
         this.match(tofuParser.T__11);
-        this.state = 135;
+        this.state = 143;
         this.match(tofuParser.T__12);
-        this.state = 136;
+        this.state = 144;
         this.blockStmt();
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1290,15 +1320,15 @@ tofuParser.prototype.expression = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 138;
+        this.state = 146;
         this.logORExpression();
-        this.state = 141;
+        this.state = 149;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         if(_la===tofuParser.T__4) {
-            this.state = 139;
+            this.state = 147;
             this.match(tofuParser.T__4);
-            this.state = 140;
+            this.state = 148;
             this.expression();
         }
 
@@ -1368,18 +1398,20 @@ tofuParser.prototype.logORExpression = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 143;
+        this.state = 151;
         this.logANDExpression();
-        this.state = 146;
+        this.state = 156;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
-        if(_la===tofuParser.T__14) {
-            this.state = 144;
+        while(_la===tofuParser.T__14) {
+            this.state = 152;
             this.match(tofuParser.T__14);
-            this.state = 145;
+            this.state = 153;
             this.logANDExpression();
+            this.state = 158;
+            this._errHandler.sync(this);
+            _la = this._input.LA(1);
         }
-
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
@@ -1446,18 +1478,20 @@ tofuParser.prototype.logANDExpression = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 148;
+        this.state = 159;
         this.eqExpression();
-        this.state = 151;
+        this.state = 164;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
-        if(_la===tofuParser.T__18) {
-            this.state = 149;
+        while(_la===tofuParser.T__18) {
+            this.state = 160;
             this.match(tofuParser.T__18);
-            this.state = 150;
+            this.state = 161;
             this.eqExpression();
+            this.state = 166;
+            this._errHandler.sync(this);
+            _la = this._input.LA(1);
         }
-
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
@@ -1483,7 +1517,6 @@ function EqExpressionContext(parser, parent, invokingState) {
 	antlr4.ParserRuleContext.call(this, parent, invokingState);
     this.parser = parser;
     this.ruleIndex = tofuParser.RULE_eqExpression;
-    this.eqOp = null; // Token
     return this;
 }
 
@@ -1498,6 +1531,17 @@ EqExpressionContext.prototype.relExpression = function(i) {
         return this.getTypedRuleContexts(RelExpressionContext);
     } else {
         return this.getTypedRuleContext(RelExpressionContext,i);
+    }
+};
+
+EqExpressionContext.prototype.eqOp = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(EqOpContext);
+    } else {
+        return this.getTypedRuleContext(EqOpContext,i);
     }
 };
 
@@ -1525,26 +1569,85 @@ tofuParser.prototype.eqExpression = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 153;
+        this.state = 167;
         this.relExpression();
-        this.state = 156;
+        this.state = 173;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
-        if(_la===tofuParser.T__19 || _la===tofuParser.T__20) {
-            this.state = 154;
-            localctx.eqOp = this._input.LT(1);
-            _la = this._input.LA(1);
-            if(!(_la===tofuParser.T__19 || _la===tofuParser.T__20)) {
-                localctx.eqOp = this._errHandler.recoverInline(this);
-            }
-            else {
-            	this._errHandler.reportMatch(this);
-                this.consume();
-            }
-            this.state = 155;
+        while(_la===tofuParser.T__19 || _la===tofuParser.T__20) {
+            this.state = 168;
+            this.eqOp();
+            this.state = 169;
             this.relExpression();
+            this.state = 175;
+            this._errHandler.sync(this);
+            _la = this._input.LA(1);
         }
+    } catch (re) {
+    	if(re instanceof antlr4.error.RecognitionException) {
+	        localctx.exception = re;
+	        this._errHandler.reportError(this, re);
+	        this._errHandler.recover(this, re);
+	    } else {
+	    	throw re;
+	    }
+    } finally {
+        this.exitRule();
+    }
+    return localctx;
+};
 
+
+function EqOpContext(parser, parent, invokingState) {
+	if(parent===undefined) {
+	    parent = null;
+	}
+	if(invokingState===undefined || invokingState===null) {
+		invokingState = -1;
+	}
+	antlr4.ParserRuleContext.call(this, parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = tofuParser.RULE_eqOp;
+    return this;
+}
+
+EqOpContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+EqOpContext.prototype.constructor = EqOpContext;
+
+
+EqOpContext.prototype.enterRule = function(listener) {
+    if(listener instanceof tofuListener ) {
+        listener.enterEqOp(this);
+	}
+};
+
+EqOpContext.prototype.exitRule = function(listener) {
+    if(listener instanceof tofuListener ) {
+        listener.exitEqOp(this);
+	}
+};
+
+
+
+
+tofuParser.EqOpContext = EqOpContext;
+
+tofuParser.prototype.eqOp = function() {
+
+    var localctx = new EqOpContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 30, tofuParser.RULE_eqOp);
+    var _la = 0; // Token type
+    try {
+        this.enterOuterAlt(localctx, 1);
+        this.state = 176;
+        _la = this._input.LA(1);
+        if(!(_la===tofuParser.T__19 || _la===tofuParser.T__20)) {
+        this._errHandler.recoverInline(this);
+        }
+        else {
+        	this._errHandler.reportMatch(this);
+            this.consume();
+        }
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
@@ -1570,7 +1673,6 @@ function RelExpressionContext(parser, parent, invokingState) {
 	antlr4.ParserRuleContext.call(this, parent, invokingState);
     this.parser = parser;
     this.ruleIndex = tofuParser.RULE_relExpression;
-    this.relOp = null; // Token
     return this;
 }
 
@@ -1585,6 +1687,17 @@ RelExpressionContext.prototype.addExpression = function(i) {
         return this.getTypedRuleContexts(AddExpressionContext);
     } else {
         return this.getTypedRuleContext(AddExpressionContext,i);
+    }
+};
+
+RelExpressionContext.prototype.relOp = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(RelOpContext);
+    } else {
+        return this.getTypedRuleContext(RelOpContext,i);
     }
 };
 
@@ -1608,30 +1721,89 @@ tofuParser.RelExpressionContext = RelExpressionContext;
 tofuParser.prototype.relExpression = function() {
 
     var localctx = new RelExpressionContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 30, tofuParser.RULE_relExpression);
+    this.enterRule(localctx, 32, tofuParser.RULE_relExpression);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 158;
+        this.state = 178;
         this.addExpression();
-        this.state = 161;
+        this.state = 184;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
-        if((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << tofuParser.T__21) | (1 << tofuParser.T__22) | (1 << tofuParser.T__23) | (1 << tofuParser.T__24))) !== 0)) {
-            this.state = 159;
-            localctx.relOp = this._input.LT(1);
-            _la = this._input.LA(1);
-            if(!((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << tofuParser.T__21) | (1 << tofuParser.T__22) | (1 << tofuParser.T__23) | (1 << tofuParser.T__24))) !== 0))) {
-                localctx.relOp = this._errHandler.recoverInline(this);
-            }
-            else {
-            	this._errHandler.reportMatch(this);
-                this.consume();
-            }
-            this.state = 160;
+        while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << tofuParser.T__21) | (1 << tofuParser.T__22) | (1 << tofuParser.T__23) | (1 << tofuParser.T__24))) !== 0)) {
+            this.state = 179;
+            this.relOp();
+            this.state = 180;
             this.addExpression();
+            this.state = 186;
+            this._errHandler.sync(this);
+            _la = this._input.LA(1);
         }
+    } catch (re) {
+    	if(re instanceof antlr4.error.RecognitionException) {
+	        localctx.exception = re;
+	        this._errHandler.reportError(this, re);
+	        this._errHandler.recover(this, re);
+	    } else {
+	    	throw re;
+	    }
+    } finally {
+        this.exitRule();
+    }
+    return localctx;
+};
 
+
+function RelOpContext(parser, parent, invokingState) {
+	if(parent===undefined) {
+	    parent = null;
+	}
+	if(invokingState===undefined || invokingState===null) {
+		invokingState = -1;
+	}
+	antlr4.ParserRuleContext.call(this, parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = tofuParser.RULE_relOp;
+    return this;
+}
+
+RelOpContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+RelOpContext.prototype.constructor = RelOpContext;
+
+
+RelOpContext.prototype.enterRule = function(listener) {
+    if(listener instanceof tofuListener ) {
+        listener.enterRelOp(this);
+	}
+};
+
+RelOpContext.prototype.exitRule = function(listener) {
+    if(listener instanceof tofuListener ) {
+        listener.exitRelOp(this);
+	}
+};
+
+
+
+
+tofuParser.RelOpContext = RelOpContext;
+
+tofuParser.prototype.relOp = function() {
+
+    var localctx = new RelOpContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 34, tofuParser.RULE_relOp);
+    var _la = 0; // Token type
+    try {
+        this.enterOuterAlt(localctx, 1);
+        this.state = 187;
+        _la = this._input.LA(1);
+        if(!((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << tofuParser.T__21) | (1 << tofuParser.T__22) | (1 << tofuParser.T__23) | (1 << tofuParser.T__24))) !== 0))) {
+        this._errHandler.recoverInline(this);
+        }
+        else {
+        	this._errHandler.reportMatch(this);
+            this.consume();
+        }
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
@@ -1657,7 +1829,6 @@ function AddExpressionContext(parser, parent, invokingState) {
 	antlr4.ParserRuleContext.call(this, parent, invokingState);
     this.parser = parser;
     this.ruleIndex = tofuParser.RULE_addExpression;
-    this.addOp = null; // Token
     return this;
 }
 
@@ -1672,6 +1843,17 @@ AddExpressionContext.prototype.multExpression = function(i) {
         return this.getTypedRuleContexts(MultExpressionContext);
     } else {
         return this.getTypedRuleContext(MultExpressionContext,i);
+    }
+};
+
+AddExpressionContext.prototype.addOp = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(AddOpContext);
+    } else {
+        return this.getTypedRuleContext(AddOpContext,i);
     }
 };
 
@@ -1695,29 +1877,90 @@ tofuParser.AddExpressionContext = AddExpressionContext;
 tofuParser.prototype.addExpression = function() {
 
     var localctx = new AddExpressionContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 32, tofuParser.RULE_addExpression);
+    this.enterRule(localctx, 36, tofuParser.RULE_addExpression);
+    try {
+        this.enterOuterAlt(localctx, 1);
+        this.state = 189;
+        this.multExpression();
+        this.state = 195;
+        this._errHandler.sync(this);
+        var _alt = this._interp.adaptivePredict(this._input,16,this._ctx)
+        while(_alt!=2 && _alt!=antlr4.atn.ATN.INVALID_ALT_NUMBER) {
+            if(_alt===1) {
+                this.state = 190;
+                this.addOp();
+                this.state = 191;
+                this.multExpression(); 
+            }
+            this.state = 197;
+            this._errHandler.sync(this);
+            _alt = this._interp.adaptivePredict(this._input,16,this._ctx);
+        }
+
+    } catch (re) {
+    	if(re instanceof antlr4.error.RecognitionException) {
+	        localctx.exception = re;
+	        this._errHandler.reportError(this, re);
+	        this._errHandler.recover(this, re);
+	    } else {
+	    	throw re;
+	    }
+    } finally {
+        this.exitRule();
+    }
+    return localctx;
+};
+
+
+function AddOpContext(parser, parent, invokingState) {
+	if(parent===undefined) {
+	    parent = null;
+	}
+	if(invokingState===undefined || invokingState===null) {
+		invokingState = -1;
+	}
+	antlr4.ParserRuleContext.call(this, parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = tofuParser.RULE_addOp;
+    return this;
+}
+
+AddOpContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+AddOpContext.prototype.constructor = AddOpContext;
+
+
+AddOpContext.prototype.enterRule = function(listener) {
+    if(listener instanceof tofuListener ) {
+        listener.enterAddOp(this);
+	}
+};
+
+AddOpContext.prototype.exitRule = function(listener) {
+    if(listener instanceof tofuListener ) {
+        listener.exitAddOp(this);
+	}
+};
+
+
+
+
+tofuParser.AddOpContext = AddOpContext;
+
+tofuParser.prototype.addOp = function() {
+
+    var localctx = new AddOpContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 38, tofuParser.RULE_addOp);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 163;
-        this.multExpression();
-        this.state = 166;
-        this._errHandler.sync(this);
-        var la_ = this._interp.adaptivePredict(this._input,16,this._ctx);
-        if(la_===1) {
-            this.state = 164;
-            localctx.addOp = this._input.LT(1);
-            _la = this._input.LA(1);
-            if(!(_la===tofuParser.T__25 || _la===tofuParser.T__26)) {
-                localctx.addOp = this._errHandler.recoverInline(this);
-            }
-            else {
-            	this._errHandler.reportMatch(this);
-                this.consume();
-            }
-            this.state = 165;
-            this.multExpression();
-
+        this.state = 198;
+        _la = this._input.LA(1);
+        if(!(_la===tofuParser.T__25 || _la===tofuParser.T__26)) {
+        this._errHandler.recoverInline(this);
+        }
+        else {
+        	this._errHandler.reportMatch(this);
+            this.consume();
         }
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1744,7 +1987,6 @@ function MultExpressionContext(parser, parent, invokingState) {
 	antlr4.ParserRuleContext.call(this, parent, invokingState);
     this.parser = parser;
     this.ruleIndex = tofuParser.RULE_multExpression;
-    this.multOp = null; // Token
     return this;
 }
 
@@ -1759,6 +2001,17 @@ MultExpressionContext.prototype.unaryExpression = function(i) {
         return this.getTypedRuleContexts(UnaryExpressionContext);
     } else {
         return this.getTypedRuleContext(UnaryExpressionContext,i);
+    }
+};
+
+MultExpressionContext.prototype.multOp = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(MultOpContext);
+    } else {
+        return this.getTypedRuleContext(MultOpContext,i);
     }
 };
 
@@ -1782,30 +2035,89 @@ tofuParser.MultExpressionContext = MultExpressionContext;
 tofuParser.prototype.multExpression = function() {
 
     var localctx = new MultExpressionContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 34, tofuParser.RULE_multExpression);
+    this.enterRule(localctx, 40, tofuParser.RULE_multExpression);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 168;
+        this.state = 200;
         this.unaryExpression();
-        this.state = 171;
+        this.state = 206;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
-        if(_la===tofuParser.T__27 || _la===tofuParser.T__28) {
-            this.state = 169;
-            localctx.multOp = this._input.LT(1);
-            _la = this._input.LA(1);
-            if(!(_la===tofuParser.T__27 || _la===tofuParser.T__28)) {
-                localctx.multOp = this._errHandler.recoverInline(this);
-            }
-            else {
-            	this._errHandler.reportMatch(this);
-                this.consume();
-            }
-            this.state = 170;
+        while(_la===tofuParser.T__27 || _la===tofuParser.T__28) {
+            this.state = 201;
+            this.multOp();
+            this.state = 202;
             this.unaryExpression();
+            this.state = 208;
+            this._errHandler.sync(this);
+            _la = this._input.LA(1);
         }
+    } catch (re) {
+    	if(re instanceof antlr4.error.RecognitionException) {
+	        localctx.exception = re;
+	        this._errHandler.reportError(this, re);
+	        this._errHandler.recover(this, re);
+	    } else {
+	    	throw re;
+	    }
+    } finally {
+        this.exitRule();
+    }
+    return localctx;
+};
 
+
+function MultOpContext(parser, parent, invokingState) {
+	if(parent===undefined) {
+	    parent = null;
+	}
+	if(invokingState===undefined || invokingState===null) {
+		invokingState = -1;
+	}
+	antlr4.ParserRuleContext.call(this, parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = tofuParser.RULE_multOp;
+    return this;
+}
+
+MultOpContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+MultOpContext.prototype.constructor = MultOpContext;
+
+
+MultOpContext.prototype.enterRule = function(listener) {
+    if(listener instanceof tofuListener ) {
+        listener.enterMultOp(this);
+	}
+};
+
+MultOpContext.prototype.exitRule = function(listener) {
+    if(listener instanceof tofuListener ) {
+        listener.exitMultOp(this);
+	}
+};
+
+
+
+
+tofuParser.MultOpContext = MultOpContext;
+
+tofuParser.prototype.multOp = function() {
+
+    var localctx = new MultOpContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 42, tofuParser.RULE_multOp);
+    var _la = 0; // Token type
+    try {
+        this.enterOuterAlt(localctx, 1);
+        this.state = 209;
+        _la = this._input.LA(1);
+        if(!(_la===tofuParser.T__27 || _la===tofuParser.T__28)) {
+        this._errHandler.recoverInline(this);
+        }
+        else {
+        	this._errHandler.reportMatch(this);
+            this.consume();
+        }
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
@@ -1862,15 +2174,15 @@ tofuParser.UnaryExpressionContext = UnaryExpressionContext;
 tofuParser.prototype.unaryExpression = function() {
 
     var localctx = new UnaryExpressionContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 36, tofuParser.RULE_unaryExpression);
+    this.enterRule(localctx, 44, tofuParser.RULE_unaryExpression);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 174;
+        this.state = 212;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         if(_la===tofuParser.T__26 || _la===tofuParser.T__29) {
-            this.state = 173;
+            this.state = 211;
             localctx.unaryOp = this._input.LT(1);
             _la = this._input.LA(1);
             if(!(_la===tofuParser.T__26 || _la===tofuParser.T__29)) {
@@ -1882,7 +2194,7 @@ tofuParser.prototype.unaryExpression = function() {
             }
         }
 
-        this.state = 176;
+        this.state = 214;
         this.callMemExpression();
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1950,20 +2262,20 @@ tofuParser.CallMemExpressionContext = CallMemExpressionContext;
 tofuParser.prototype.callMemExpression = function() {
 
     var localctx = new CallMemExpressionContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 38, tofuParser.RULE_callMemExpression);
+    this.enterRule(localctx, 46, tofuParser.RULE_callMemExpression);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 178;
+        this.state = 216;
         this.primaryExpression();
-        this.state = 182;
+        this.state = 220;
         this._errHandler.sync(this);
         var _alt = this._interp.adaptivePredict(this._input,19,this._ctx)
         while(_alt!=2 && _alt!=antlr4.atn.ATN.INVALID_ALT_NUMBER) {
             if(_alt===1) {
-                this.state = 179;
+                this.state = 217;
                 this.callMemHelperExpression(); 
             }
-            this.state = 184;
+            this.state = 222;
             this._errHandler.sync(this);
             _alt = this._interp.adaptivePredict(this._input,19,this._ctx);
         }
@@ -2066,23 +2378,23 @@ tofuParser.CallMemHelperExpressionContext = CallMemHelperExpressionContext;
 tofuParser.prototype.callMemHelperExpression = function() {
 
     var localctx = new CallMemHelperExpressionContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 40, tofuParser.RULE_callMemHelperExpression);
+    this.enterRule(localctx, 48, tofuParser.RULE_callMemHelperExpression);
     try {
-        this.state = 188;
+        this.state = 226;
         this._errHandler.sync(this);
         switch(this._input.LA(1)) {
         case tofuParser.T__30:
             localctx = new CallMemDotContext(this, localctx);
             this.enterOuterAlt(localctx, 1);
-            this.state = 185;
+            this.state = 223;
             this.match(tofuParser.T__30);
-            this.state = 186;
+            this.state = 224;
             this.match(tofuParser.IDENTIFIER);
             break;
         case tofuParser.T__5:
             localctx = new CallMemArgContext(this, localctx);
             this.enterOuterAlt(localctx, 2);
-            this.state = 187;
+            this.state = 225;
             this.arguments();
             break;
         default:
@@ -2150,33 +2462,33 @@ tofuParser.ArgumentsContext = ArgumentsContext;
 tofuParser.prototype.arguments = function() {
 
     var localctx = new ArgumentsContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 42, tofuParser.RULE_arguments);
+    this.enterRule(localctx, 50, tofuParser.RULE_arguments);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 190;
+        this.state = 228;
         this.match(tofuParser.T__5);
-        this.state = 199;
+        this.state = 237;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         if((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << tofuParser.T__5) | (1 << tofuParser.T__12) | (1 << tofuParser.T__26) | (1 << tofuParser.T__29))) !== 0) || ((((_la - 32)) & ~0x1f) == 0 && ((1 << (_la - 32)) & ((1 << (tofuParser.T__31 - 32)) | (1 << (tofuParser.T__32 - 32)) | (1 << (tofuParser.T__33 - 32)) | (1 << (tofuParser.T__34 - 32)) | (1 << (tofuParser.STRING - 32)) | (1 << (tofuParser.IDENTIFIER - 32)) | (1 << (tofuParser.NUMBER - 32)))) !== 0)) {
-            this.state = 191;
+            this.state = 229;
             this.expression();
-            this.state = 196;
+            this.state = 234;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
             while(_la===tofuParser.T__6) {
-                this.state = 192;
+                this.state = 230;
                 this.match(tofuParser.T__6);
-                this.state = 193;
+                this.state = 231;
                 this.expression();
-                this.state = 198;
+                this.state = 236;
                 this._errHandler.sync(this);
                 _la = this._input.LA(1);
             }
         }
 
-        this.state = 201;
+        this.state = 239;
         this.match(tofuParser.T__7);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -2463,85 +2775,85 @@ tofuParser.PrimaryExpressionContext = PrimaryExpressionContext;
 tofuParser.prototype.primaryExpression = function() {
 
     var localctx = new PrimaryExpressionContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 44, tofuParser.RULE_primaryExpression);
+    this.enterRule(localctx, 52, tofuParser.RULE_primaryExpression);
     var _la = 0; // Token type
     try {
-        this.state = 223;
+        this.state = 261;
         this._errHandler.sync(this);
         switch(this._input.LA(1)) {
         case tofuParser.T__5:
             localctx = new NestedExpressionContext(this, localctx);
             this.enterOuterAlt(localctx, 1);
-            this.state = 203;
+            this.state = 241;
             this.match(tofuParser.T__5);
-            this.state = 204;
+            this.state = 242;
             this.expression();
-            this.state = 205;
+            this.state = 243;
             this.match(tofuParser.T__7);
             break;
         case tofuParser.NUMBER:
             localctx = new NumberExpressionContext(this, localctx);
             this.enterOuterAlt(localctx, 2);
-            this.state = 207;
+            this.state = 245;
             this.match(tofuParser.NUMBER);
             break;
         case tofuParser.T__12:
             localctx = new TrueExpressionContext(this, localctx);
             this.enterOuterAlt(localctx, 3);
-            this.state = 208;
+            this.state = 246;
             this.match(tofuParser.T__12);
             break;
         case tofuParser.T__31:
             localctx = new FalseExpressionContext(this, localctx);
             this.enterOuterAlt(localctx, 4);
-            this.state = 209;
+            this.state = 247;
             this.match(tofuParser.T__31);
             break;
         case tofuParser.STRING:
             localctx = new StringExpressionContext(this, localctx);
             this.enterOuterAlt(localctx, 5);
-            this.state = 210;
+            this.state = 248;
             this.match(tofuParser.STRING);
             break;
         case tofuParser.T__32:
             localctx = new UndefinedExpressionContext(this, localctx);
             this.enterOuterAlt(localctx, 6);
-            this.state = 211;
+            this.state = 249;
             this.match(tofuParser.T__32);
             break;
         case tofuParser.IDENTIFIER:
             localctx = new IdentifierExpressionContext(this, localctx);
             this.enterOuterAlt(localctx, 7);
-            this.state = 212;
+            this.state = 250;
             this.match(tofuParser.IDENTIFIER);
             break;
         case tofuParser.T__33:
             localctx = new MakeExpressionContext(this, localctx);
             this.enterOuterAlt(localctx, 8);
-            this.state = 213;
+            this.state = 251;
             this.match(tofuParser.T__33);
-            this.state = 214;
+            this.state = 252;
             this.match(tofuParser.IDENTIFIER);
             break;
         case tofuParser.T__34:
             localctx = new ListExpressionContext(this, localctx);
             this.enterOuterAlt(localctx, 9);
-            this.state = 215;
+            this.state = 253;
             this.match(tofuParser.T__34);
-            this.state = 220;
+            this.state = 258;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
             if((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << tofuParser.T__5) | (1 << tofuParser.T__12) | (1 << tofuParser.T__26) | (1 << tofuParser.T__29))) !== 0) || ((((_la - 32)) & ~0x1f) == 0 && ((1 << (_la - 32)) & ((1 << (tofuParser.T__31 - 32)) | (1 << (tofuParser.T__32 - 32)) | (1 << (tofuParser.T__33 - 32)) | (1 << (tofuParser.T__34 - 32)) | (1 << (tofuParser.STRING - 32)) | (1 << (tofuParser.IDENTIFIER - 32)) | (1 << (tofuParser.NUMBER - 32)))) !== 0)) {
-                this.state = 216;
+                this.state = 254;
                 this.expression();
 
-                this.state = 217;
+                this.state = 255;
                 this.match(tofuParser.T__6);
-                this.state = 218;
+                this.state = 256;
                 this.expression();
             }
 
-            this.state = 222;
+            this.state = 260;
             this.match(tofuParser.T__35);
             break;
         default:

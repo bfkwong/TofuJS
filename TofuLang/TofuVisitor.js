@@ -1,6 +1,4 @@
 const ast = require("./ast");
-const TofuParser = require('./AntlrFiles/tofuParser');
-
 
 class TofuVisitor {
 
@@ -47,7 +45,7 @@ class TofuVisitor {
     }
 
     visitParameter(ctx) {
-        return ctx.IDENTIFIER().map(id => this.visitPrimaryExpression(id));
+        return ctx.IDENTIFIER().map(id => id.getText());
     }
 
     visitStatementDeclarations(ctx) {
@@ -125,43 +123,47 @@ class TofuVisitor {
     }
 
     visitLogORExpression(ctx) {
-        if (ctx.logANDExpression(1)) {
-            let lft = this.visitLogANDExpression(ctx.logANDExpression(0));
-            let rht = this.visitLogANDExpression(ctx.logANDExpression(1));
+        let lft = this.visitLogANDExpression(ctx.logANDExpression(0));
 
-            return new ast.EXP_BINARY(new ast.BOP_OR, lft, rht);
+        for (let i = 1; i < ctx.logANDExpression().length; i++) {
+            let rht = this.visitLogANDExpression(ctx.logANDExpression(i));
+            lft = new ast.EXP_BINARY(new ast.BOP_OR, lft, rht);
         }
-        return this.visitLogANDExpression(ctx.logANDExpression(0));
+
+        return lft;
     }
 
     visitLogANDExpression(ctx) {
-        if (ctx.eqExpression(1)) {
-            let lft = this.visitEqExpression(ctx.eqExpression(0));
-            let rht = this.visitEqExpression(ctx.eqExpression(1));
+        let lft = this.visitEqExpression(ctx.eqExpression(0));
 
-            return new ast.EXP_BINARY(new ast.BOP_AND, lft, rht);
+        for (let i = 1; i < ctx.eqExpression().length; i++) {
+            let rht = this.visitEqExpression(ctx.eqExpression(i));
+            lft = new ast.EXP_BINARY(new ast.BOP_AND, lft, rht);
         }
-        return this.visitEqExpression(ctx.eqExpression(0))
+
+        return lft;
     }
 
     visitEqExpression(ctx)  {
-        if (ctx.relExpression(1)) {
-            let lft = this.visitRelExpression(ctx.relExpression(0));
-            let rht = this.visitRelExpression(ctx.relExpression(1));
-            let opr = ctx.eqOp.text === "==" ? new ast.BOP_EQ : new ast.BOP_NE;
+        let lft = this.visitRelExpression(ctx.relExpression(0));
 
-            return new ast.EXP_BINARY(opr, lft, rht);
+        for (let i = 1; i < ctx.relExpression().length; i++) {
+            let rht = this.visitRelExpression(ctx.relExpression(i));
+            let opr = ctx.eqOp(i-1).getText();
+            lft = new ast.EXP_BINARY(opr === "==" ? new ast.BOP_EQ : new ast.BOP_NE, lft, rht);
         }
-        return this.visitRelExpression(ctx.relExpression(0));
+
+        return lft;
     }
     
     visitRelExpression(ctx) {
-        if (ctx.addExpression(1)) {
-            let lft = this.visitAddExpression(ctx.addExpression(0));
-            let rht = this.visitAddExpression(ctx.addExpression(1)); 
-            let opr; 
-            
-            switch (ctx.relOp.text) {
+        let lft = this.visitAddExpression(ctx.addExpression(0));
+
+        for (let i = 1; i < ctx.addExpression().length; i++) {
+            let rht = this.visitAddExpression(ctx.addExpression(i));
+            let opr;
+
+            switch (ctx.relOp(i-1).getText()) {
                 case ">":
                     opr = new ast.BOP_GT;
                     break;
@@ -175,31 +177,34 @@ class TofuVisitor {
                     opr = new ast.BOP_LE;
             }
 
-            return new ast.EXP_BINARY(opr, lft, rht);
+            lft = new ast.EXP_BINARY(opr, lft, rht);
         }
-        return this.visitAddExpression(ctx.addExpression(0));
+
+        return lft;
     }
 
     visitAddExpression(ctx) {
-        if (ctx.multExpression(1)) {
-            let lft = this.visitMultExpression(ctx.multExpression(0));
-            let rht = this.visitMultExpression(ctx.multExpression(1));
-            let opr = ctx.addOp.text === "+" ? new ast.BOP_PLUS : new ast.BOP_MINUS;
+        let lft = this.visitMultExpression(ctx.multExpression(0));
 
-            return new ast.EXP_BINARY(opr, lft, rht);
+        for (let i = 1; i < ctx.multExpression().length; i++) {
+            let rht = this.visitMultExpression(ctx.multExpression(i));
+            let opr = ctx.addOp(i-1).getText();
+            lft = new ast.EXP_BINARY(opr === "+" ? new ast.BOP_PLUS : new ast.BOP_MINUS, lft, rht);
         }
-        return this.visitMultExpression(ctx.multExpression(0));
+
+        return lft;
     }
 
     visitMultExpression(ctx) {
-        if (ctx.unaryExpression(1)) {
-            let lft = this.visitUnaryExpression(ctx.unaryExpression(0));
-            let rht = this.visitUnaryExpression(ctx.unaryExpression(1));
-            let opr = ctx.multOp.text === "*" ? new ast.BOP_TIMES : new ast.BOP_DIVIDE;
+        let lft = this.visitUnaryExpression(ctx.unaryExpression(0));
 
-            return new ast.EXP_BINARY(opr, lft, rht);
+        for (let i = 1; i < ctx.unaryExpression().length; i++) {
+            let rht = this.visitUnaryExpression(ctx.unaryExpression(i));
+            let opr = ctx.multOp(i-1).getText();
+            lft = new ast.EXP_BINARY(opr === "*" ? new ast.BOP_TIMES : new ast.BOP_DIVIDE, lft, rht);
         }
-        return this.visitUnaryExpression(ctx.unaryExpression(0));
+
+        return lft;
     }
 
     visitUnaryExpression(ctx) {
@@ -209,7 +214,16 @@ class TofuVisitor {
     }
 
     visitCallMemExpression(ctx) {
-        return this.visitPrimaryExpression(ctx.primaryExpression());
+        let expr = this.visitPrimaryExpression(ctx.primaryExpression());
+        for (let cmHelper of ctx.callMemHelperExpression()) {
+            if (cmHelper.constructor.name === "CallMemDotContext") {
+                expr = new ast.EXP_DOT(expr, cmHelper.IDENTIFIER().getText());
+            } else {
+                let args = cmHelper.arguments().expression().map(ex => this.visitExpression(ex));
+                expr = new ast.EXP_CALL(expr, args);
+            }
+        }
+        return expr;
     }
 
     visitPrimaryExpression(ctx) {
@@ -237,6 +251,14 @@ class TofuVisitor {
                 break;
             case "MakeExpressionContext":
                 expr = new ast.EXP_MAKE(ctx.IDENTIFIER().getText());
+                break;
+            case "ListExpressionContext":
+                let exprs = ctx.expression().map(ex => this.visitExpression(ex));
+                expr = new ast.EXP_LIST(exprs);
+                break;
+            case "NestedExpressionContext":
+                let nestedExpr = this.visitExpression(ctx.expression());
+                expr = new ast.EXP_NEST(nestedExpr);
                 break;
             default:
                 throw new Error("Error: Expression Type Unmatched");
