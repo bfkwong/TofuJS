@@ -90,9 +90,15 @@ class TofuEvaluator {
         // console.log(util.inspect(states, false, null, true));
         stmts.forEach((s) => {
             if (s instanceof ast.ST_EXP) {
-                this.evalExpressionStatement(s, states);
+                states = this.evalExpressionStatement(s, states);
             } else if (s instanceof ast.ST_PRINT) {
-                this.evalPrintStatement(s, states);
+                states = this.evalPrintStatement(s, states);
+            } else if (s instanceof ast.ST_BLOCK) {
+                states = this.evalBlockStatement(s, states);
+            } else if (s instanceof ast.ST_IF) {
+                states = this.evalIfStatement(s, states);
+            } else if (s instanceof ast.ST_WHILE) {
+                states = this.evalWhileStatement(s, states);
             }
         });
         return states;
@@ -107,6 +113,30 @@ class TofuEvaluator {
         const res = this.evalExpression(stmt.exp, states);
         console.log(res);
         return states
+    }
+
+    evalBlockStatement(stmt, states)  {
+        return this.evalStatements(stmt.stmts, states);
+    }
+
+    evalIfStatement(stmt, states) {
+        const guardRes = this.evalExpression(stmt.guard, states);
+
+        if (guardRes) {
+            return this.evalBlockStatement(stmt.th, states);
+        } else {
+            return this.evalBlockStatement(stmt.el, states);
+        }
+    }
+
+    evalWhileStatement(stmt, states)  {
+        let guardRes = this.evalExpression(stmt.guard, states);
+
+        while(guardRes) {
+            this.evalBlockStatement(stmt.body, states);
+            guardRes = this.evalExpression(stmt.guard, states);
+        }
+        return states;
     }
 
     evalExpression(exp, states) {
