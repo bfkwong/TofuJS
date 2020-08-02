@@ -10,9 +10,6 @@ exports.BOP_TIMES = BOP_TIMES;
 class BOP_DIVIDE {}
 exports.BOP_DIVIDE = BOP_DIVIDE;
 
-class BOP_MOD {}
-exports.BOP_MOD = BOP_MOD;
-
 class BOP_EQ {}
 exports.BOP_EQ = BOP_EQ;
 
