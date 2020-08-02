@@ -258,7 +258,7 @@ class TofuVisitor {
                 break;
             case "NestedExpressionContext":
                 let nestedExpr = this.visitExpression(ctx.expression());
-                expr = new ast.EXP_NEST(nestedExpr);
+                expr = nestedExpr;
                 break;
             default:
                 throw new Error("Error: Expression Type Unmatched");

@@ -32,7 +32,7 @@ ifStmt:
 
 printStmt: 'print' '(' expression? ')' ';';
 
-iterationStmt: 'while' '(' expression ')' 'is' 'true' blockStmt;
+iterationStmt: 'while' '(' expression ')' 'is' 'true' 'then' blockStmt;
 
 expression: logORExpression ('=' expression)?;
 
