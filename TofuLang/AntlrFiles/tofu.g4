@@ -19,7 +19,7 @@ stmt:
 	| printStmt
 	| retStmt;
 
-retStmt: 'return' (expression)?;
+retStmt: 'return' (expression)? ';';
 
 expStmt: expression ';';
 

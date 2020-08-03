@@ -42,15 +42,27 @@ class BoundedMethodValue {
 }
 
 function declare(states, id, value) {
-    if (states[states.length - 1][id]) {
-        throw new Error(`Error: ${id} is already declared in local scope`)
-    } else {
-        states[states.length - 1][id] = value;
-    }
+    states[states.length - 1][id] = value;
 }
 
 function triggerError(msg) {
     throw new Error(msg);
+}
+
+function getFromStates(states, id) {
+    for (let state of states.reverse()) {
+        if (state[id]) {
+            return state[id];
+        }
+    }
+    throw new Error(`Error: ${id} not declared`);
+}
+
+class ReturnValue extends Error {
+    constructor(value, ...params) {
+        super(...params);
+        this.value = value;
+    }
 }
 
 class TofuEvaluator {
@@ -81,7 +93,8 @@ class TofuEvaluator {
 
     evalFunctions(funcs, states) {
         funcs.forEach((f) => {
-            declare(states, f.funcName, f);
+            const closure = new ClosureValue({params: f.params, stmts: f.stmts}, states);
+            declare(states, f.funcName, closure);
         });
         return states;
     }
@@ -99,9 +112,16 @@ class TofuEvaluator {
                 states = this.evalIfStatement(s, states);
             } else if (s instanceof ast.ST_WHILE) {
                 states = this.evalWhileStatement(s, states);
+            } else {
+                this.evalReturnStatement(s, states);
             }
         });
         return states;
+    }
+
+    evalReturnStatement(stmt, states) {
+        const exprRes = this.evalExpression(stmt.exp, states);
+        throw new ReturnValue(exprRes, "Not an Error");
     }
 
     evalExpressionStatement(stmt, states) {
@@ -158,7 +178,7 @@ class TofuEvaluator {
         if (exp instanceof ast.EXP_ID) {
             for (let state of states.reverse()) {
                 if (state[exp.id] !== undefined) {
-                    return state[exp.id];
+                    return this.evalExpression(state[exp.id], states);
                 }
             }
             throw new Error(`Error: ${exp.id} is undefined`);
@@ -169,6 +189,14 @@ class TofuEvaluator {
 
             if (lhsExp instanceof ast.EXP_ID) {
                 const identifier = lhsExp.id;
+
+                for (let state of states.reverse()) {
+                    if (state[identifier] !== undefined) {
+                        state[identifier] = rhsExp;
+                        return rhsExp;
+                    }
+                }
+
                 declare(states, identifier, rhsExp);
             }
             return rhsExp;
@@ -180,8 +208,16 @@ class TofuEvaluator {
                 ["number", "string"].includes(typeof n1) && ["number", "string"].includes(typeof n2);
 
             const lft = this.evalExpression(exp.lft, states);
-            const rht = this.evalExpression(exp.rht, states);
             const opr = exp.opr;
+
+            if (opr instanceof ast.BOP_AND && lft === false) {
+                return false;
+            }
+            if (opr instanceof ast.BOP_OR && lft === true) {
+                return true;
+            }
+
+            const rht = this.evalExpression(exp.rht, states);
 
             if (opr instanceof ast.BOP_PLUS) {
                 return areNumOrStr(lft, rht) ? lft + rht : triggerError("Error: only subtract num");
@@ -233,7 +269,94 @@ class TofuEvaluator {
             }
             throw new Error("Error: unexpected unary operators");
         }
+        if (exp instanceof ast.EXP_CALL) {
+            const funcExpr = exp.func;
+            let closure;
+
+            if (funcExpr instanceof ast.EXP_ID) {
+                let funcName = funcExpr.id;
+                closure = getFromStates(states, funcName);
+            }
+
+            let newState = {};
+            for (let i = 0; i < closure.code.params.length; i++) {
+                newState[closure.code.params[i]] = exp.args[i];
+            }
+
+            states.push(newState);
+
+            const funcStmt = closure.code.stmts;
+            if (funcStmt instanceof ast.ST_EXP) {
+                return this.evalExpression(funcStmt.exp, states);
+            }
+            if (funcStmt instanceof ast.ST_IF) {
+                const guardRes = this.evalExpression(funcStmt.guard, states);
+                if (guardRes) {
+                    try {
+                        this.evalBlockStatement(funcStmt.th, states);
+                    } catch (e) {
+                        if (e instanceof ReturnValue) {
+                            return e.value;
+                        } else {
+                            throw e;
+                        }
+                    }
+                } else {
+                    try {
+                        this.evalBlockStatement(funcStmt.el, states);
+                    } catch (e) {
+                        if (e instanceof ReturnValue) {
+                            return e.value;
+                        } else {
+                            throw e;
+                        }
+                    }
+                }
+            }
+            if (funcStmt instanceof ast.ST_PRINT) {
+                console.log(this.evalExpression(funcStmt.exp, states));
+                return undefined;
+            }
+            if (funcStmt instanceof ast.ST_WHILE) {
+                let guardRes = this.evalExpression(funcStmt.guard, states);
+
+                while(guardRes) {
+                    try {
+                        this.evalBlockStatement(funcStmt.body, states);
+                    } catch (e) {
+                        if (e instanceof ReturnValue) {
+                            return e.value;
+                        } else {
+                            throw e;
+                        }
+                    }
+
+                    guardRes = this.evalExpression(funcStmt.guard, states);
+                }
+                return undefined;
+            }
+            if (funcStmt instanceof ast.ST_BLOCK) {
+                try {
+                    this.evalBlockStatement(funcStmt, states);
+                } catch (e) {
+                    if (e instanceof ReturnValue) {
+                        return e.value;
+                    } else {
+                        throw e;
+                    }
+                }
+                return undefined;
+            }
+            if (funcStmt instanceof ast.ST_RETURN) {
+                if (funcStmt.exp) {
+                    return this.evalExpression(funcStmt.exp, states);
+                }
+                return undefined;
+            }
+        }
+        return exp;
     }
+
 
 }
 

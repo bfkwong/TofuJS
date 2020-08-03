@@ -1,5 +1,5 @@
-if (false) is true then {
-    print("true");
-} or else {
-    print("false");
-}
+f(x) = x * 3;
+g(x) = x + 3;
+
+x = 3;
+print(f(g(x)));
