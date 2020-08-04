@@ -354,6 +354,30 @@ class TofuEvaluator {
                 return undefined;
             }
         }
+        if (exp instanceof ast.EXP_MAKE) {
+            const classDecl = this.classes[exp.className];
+
+            let newEnv = [{}];
+
+            const env0 = this.evalStatements(classDecl.decls, newEnv);
+            const env1 = this.evalFunctions(classDecl.funcs, env0);
+
+            return ObjectValue(states + env1);
+        }
+        if (exp instanceof ast.EXP_DOT) {
+            const object = this.evalExpression(exp.obj);
+
+            if (!(object instanceof ObjectValue)) {
+                triggerError("Error: trying to access an attribute of something not an object");
+            }
+
+            const fieldState = getFromStates(states, exp.field);
+
+            if (fieldState instanceof ClosureValue) {
+                return new ClosureValue(fieldState.code, object.env);
+            }
+            return fieldState;
+        }
         return exp;
     }
 
