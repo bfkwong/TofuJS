@@ -1,5 +1,11 @@
-f(x) = x * 3;
-g(x) = x + 3;
+blueprint for Car {
+    color = "red";
 
-x = 3;
-print(f(g(x)));
+    changeColor(newColor) = color = newColor;
+    printColor() = print(color);
+}
+
+x = make Car;
+x.printColor();
+x.changeColor("blue");
+x.printColor();

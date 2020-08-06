@@ -185,7 +185,7 @@ class TofuEvaluator {
         }
         if (exp instanceof ast.EXP_ASSIGN) {
             const lhsExp = exp.lhs;
-            const rhsExp = this.evalExpression(exp.rhs,states);
+            const rhsExp = this.evalExpression(exp.rhs, states);
 
             if (lhsExp instanceof ast.EXP_ID) {
                 const identifier = lhsExp.id;
@@ -270,30 +270,35 @@ class TofuEvaluator {
             throw new Error("Error: unexpected unary operators");
         }
         if (exp instanceof ast.EXP_CALL) {
-            const funcExpr = exp.func;
+            const funcExpr = this.evalExpression(exp.func, states);
             let closure;
 
+            if (funcExpr instanceof ClosureValue) {
+                closure = funcExpr;
+            }
             if (funcExpr instanceof ast.EXP_ID) {
                 let funcName = funcExpr.id;
                 closure = getFromStates(states, funcName);
             }
+
 
             let newState = {};
             for (let i = 0; i < closure.code.params.length; i++) {
                 newState[closure.code.params[i]] = exp.args[i];
             }
 
-            states.push(newState);
+            let envState = closure.env;
+            envState.push(newState);
 
             const funcStmt = closure.code.stmts;
             if (funcStmt instanceof ast.ST_EXP) {
-                return this.evalExpression(funcStmt.exp, states);
+                return this.evalExpression(funcStmt.exp, envState);
             }
             if (funcStmt instanceof ast.ST_IF) {
-                const guardRes = this.evalExpression(funcStmt.guard, states);
+                const guardRes = this.evalExpression(funcStmt.guard, envState);
                 if (guardRes) {
                     try {
-                        this.evalBlockStatement(funcStmt.th, states);
+                        this.evalBlockStatement(funcStmt.th, envState);
                     } catch (e) {
                         if (e instanceof ReturnValue) {
                             return e.value;
@@ -303,7 +308,7 @@ class TofuEvaluator {
                     }
                 } else {
                     try {
-                        this.evalBlockStatement(funcStmt.el, states);
+                        this.evalBlockStatement(funcStmt.el, envState);
                     } catch (e) {
                         if (e instanceof ReturnValue) {
                             return e.value;
@@ -314,15 +319,15 @@ class TofuEvaluator {
                 }
             }
             if (funcStmt instanceof ast.ST_PRINT) {
-                console.log(this.evalExpression(funcStmt.exp, states));
+                console.log(this.evalExpression(funcStmt.exp, envState));
                 return undefined;
             }
             if (funcStmt instanceof ast.ST_WHILE) {
-                let guardRes = this.evalExpression(funcStmt.guard, states);
+                let guardRes = this.evalExpression(funcStmt.guard, envState);
 
                 while(guardRes) {
                     try {
-                        this.evalBlockStatement(funcStmt.body, states);
+                        this.evalBlockStatement(funcStmt.body, envState);
                     } catch (e) {
                         if (e instanceof ReturnValue) {
                             return e.value;
@@ -331,13 +336,13 @@ class TofuEvaluator {
                         }
                     }
 
-                    guardRes = this.evalExpression(funcStmt.guard, states);
+                    guardRes = this.evalExpression(funcStmt.guard, envState);
                 }
                 return undefined;
             }
             if (funcStmt instanceof ast.ST_BLOCK) {
                 try {
-                    this.evalBlockStatement(funcStmt, states);
+                    this.evalBlockStatement(funcStmt, envState);
                 } catch (e) {
                     if (e instanceof ReturnValue) {
                         return e.value;
@@ -349,7 +354,7 @@ class TofuEvaluator {
             }
             if (funcStmt instanceof ast.ST_RETURN) {
                 if (funcStmt.exp) {
-                    return this.evalExpression(funcStmt.exp, states);
+                    return this.evalExpression(funcStmt.exp, envState);
                 }
                 return undefined;
             }
@@ -362,16 +367,16 @@ class TofuEvaluator {
             const env0 = this.evalStatements(classDecl.decls, newEnv);
             const env1 = this.evalFunctions(classDecl.funcs, env0);
 
-            return ObjectValue(states + env1);
+            return new ObjectValue(states.concat(env1));
         }
         if (exp instanceof ast.EXP_DOT) {
-            const object = this.evalExpression(exp.obj);
+            const object = this.evalExpression(exp.obj, states);
 
             if (!(object instanceof ObjectValue)) {
                 triggerError("Error: trying to access an attribute of something not an object");
             }
 
-            const fieldState = getFromStates(states, exp.field);
+            const fieldState = getFromStates(object.env, exp.field);
 
             if (fieldState instanceof ClosureValue) {
                 return new ClosureValue(fieldState.code, object.env);
