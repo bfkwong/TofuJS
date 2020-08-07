@@ -126,6 +126,9 @@ class TofuEvaluator {
 
     evalExpressionStatement(stmt, states) {
         this.evalExpression(stmt.exp, states);
+        if (stmt.exp instanceof ast.EXP_ID) {
+            states.slice(-1)[stmt.exp.id] = null;
+        }
         return states
     }
 
@@ -173,7 +176,7 @@ class TofuEvaluator {
             return exp.num;
         }
         if (exp instanceof ast.EXP_STR) {
-            return exp.str;
+            return exp.str.slice(1,-1);
         }
         if (exp instanceof ast.EXP_ID) {
             for (let state of states.reverse()) {
@@ -270,16 +273,26 @@ class TofuEvaluator {
             throw new Error("Error: unexpected unary operators");
         }
         if (exp instanceof ast.EXP_CALL) {
+            if (exp.func instanceof ast.EXP_ID) {
+                let funcName = exp.func.id;
+                if (funcName === "input") {
+                    const readlineSync = require('readline-sync');
+
+                    let userName = readlineSync.question(this.evalExpression(exp.args[0]));
+                    return userName;
+                }
+            }
+
             const funcExpr = this.evalExpression(exp.func, states);
             let closure;
 
             if (funcExpr instanceof ClosureValue) {
                 closure = funcExpr;
             }
-            if (funcExpr instanceof ast.EXP_ID) {
-                let funcName = funcExpr.id;
-                closure = getFromStates(states, funcName);
-            }
+            // if (funcExpr instanceof ast.EXP_ID) {
+            //     let funcName = funcExpr.id;
+            //     closure = getFromStates(states, funcName);
+            // }
 
 
             let newState = {};
@@ -362,12 +375,12 @@ class TofuEvaluator {
         if (exp instanceof ast.EXP_MAKE) {
             const classDecl = this.classes[exp.className];
 
-            let newEnv = [{}];
+            let newEnv = states.concat([{}]);
 
             const env0 = this.evalStatements(classDecl.decls, newEnv);
             const env1 = this.evalFunctions(classDecl.funcs, env0);
 
-            return new ObjectValue(states.concat(env1));
+            return new ObjectValue(env1);
         }
         if (exp instanceof ast.EXP_DOT) {
             const object = this.evalExpression(exp.obj, states);

@@ -9,6 +9,7 @@
   "author": "Bryan Kwong",
   "license": "ISC",
   "dependencies": {
-    "antlr4": "^4.8.0"
+    "antlr4": "^4.8.0",
+    "readline-sync": "^1.4.10"
   }
 }

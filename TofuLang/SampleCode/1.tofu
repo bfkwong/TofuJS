@@ -1,11 +1,15 @@
-blueprint for Car {
-    color = "red";
+"fibonacci sequence";
 
-    changeColor(newColor) = color = newColor;
-    printColor() = print(color);
+x = 0;
+y = 1;
+i = 0;
+
+print(x);
+print(y);
+while (i < 12) is true then {
+    temp = y;
+    y = x + y;
+    x = temp;
+    print(y);
+    i = i + 1;
 }
-
-x = make Car;
-x.printColor();
-x.changeColor("blue");
-x.printColor();
