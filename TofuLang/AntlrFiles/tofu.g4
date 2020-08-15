@@ -71,7 +71,7 @@ primaryExpression:
 	| 'undefined'								# UndefinedExpression
 	| IDENTIFIER								# IdentifierExpression
 	| 'make' IDENTIFIER							# MakeExpression
-	| '[' (expression (',' expression))? ']'	# ListExpression
+	| '[' (expression (',' expression)*) ']'	# ListExpression
 	;
 
 STRING:

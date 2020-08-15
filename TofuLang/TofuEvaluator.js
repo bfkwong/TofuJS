@@ -34,12 +34,12 @@ class ObjectValue {
     }
 }
 
-class BoundedMethodValue {
-    constructor(object, closure) {
-        this.object = object;
-        this.closure = closure;
+class ListValue {
+    constructor(list) {
+        this.list = list;
     }
 }
+
 
 function declare(states, id, value) {
     states[states.length - 1][id] = value;
@@ -51,7 +51,7 @@ function triggerError(msg) {
 
 function getFromStates(states, id) {
     for (let state of states.reverse()) {
-        if (state[id]) {
+        if (state[id] !== undefined) {
             return state[id];
         }
     }
@@ -125,15 +125,24 @@ class TofuEvaluator {
     }
 
     evalExpressionStatement(stmt, states) {
-        this.evalExpression(stmt.exp, states);
         if (stmt.exp instanceof ast.EXP_ID) {
-            states.slice(-1)[stmt.exp.id] = null;
+            try {
+                getFromStates(states, stmt.exp.id);
+            } catch (err) {
+                states.reverse()[0][stmt.exp.id] = null;
+                return states;
+            }
         }
+        this.evalExpression(stmt.exp, states);
         return states
     }
 
     evalPrintStatement(stmt, states) {
         const res = this.evalExpression(stmt.exp, states);
+        if (res instanceof ListValue) {
+            console.log(res.list);
+            return states;
+        }
         console.log(res);
         return states
     }
@@ -278,8 +287,14 @@ class TofuEvaluator {
                 if (funcName === "input") {
                     const readlineSync = require('readline-sync');
 
-                    let userName = readlineSync.question(this.evalExpression(exp.args[0]));
+                    let userName = readlineSync.question(this.evalExpression(exp.args[0], states));
                     return userName;
+                }
+                if (funcName === "toNumber") {
+                    return parseFloat(this.evalExpression(exp.args[0], states))
+                }
+                if (funcName === "toString") {
+                    return `${this.evalExpression(exp.args[0], states)}`
                 }
             }
 
@@ -289,18 +304,33 @@ class TofuEvaluator {
             if (funcExpr instanceof ClosureValue) {
                 closure = funcExpr;
             }
-            // if (funcExpr instanceof ast.EXP_ID) {
-            //     let funcName = funcExpr.id;
-            //     closure = getFromStates(states, funcName);
-            // }
+            if (funcExpr instanceof ListValue) {
+                if (exp.args.length === 0) {
+                    triggerError("Give a value to access list")
+                    return undefined;
+                }
+                if (exp.args.length === 1) {
+                    return funcExpr.list[this.evalExpression(exp.args[0])];
+                }
+                if (exp.args.length === 2) {
+                    const arg0val = this.evalExpression(exp.args[0]);
+                    const arg1val = this.evalExpression(exp.args[1]);
+                    return funcExpr.list.slice(arg0val, arg1val);
+                }
+                if (exp.args.length > 2) {
+                    triggerError("Incorrect number of arguments");
+                    return undefined;
+                }
+
+            }
 
 
             let newState = {};
             for (let i = 0; i < closure.code.params.length; i++) {
-                newState[closure.code.params[i]] = exp.args[i];
+                newState[closure.code.params[i]] = this.evalExpression(exp.args[i], states);
             }
 
-            let envState = closure.env;
+            let envState = [...closure.env];
             envState.push(newState);
 
             const funcStmt = closure.code.stmts;
@@ -395,6 +425,9 @@ class TofuEvaluator {
                 return new ClosureValue(fieldState.code, object.env);
             }
             return fieldState;
+        }
+        if (exp instanceof ast.EXP_LIST) {
+            return new ListValue(exp.exprs.map(exp => this.evalExpression(exp, states)));
         }
         return exp;
     }

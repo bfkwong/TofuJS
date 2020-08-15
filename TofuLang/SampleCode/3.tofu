@@ -1,10 +1,10 @@
-x = "hi";
+x = input();
 
 blueprint for Person {
-    name = "";
-    age = "age";
-    gender = x;
-    occupation = "";
+    name;
+    gender;
+    age;
+    occupation;
 
     setName(newName) = name = newName;
     setAge(newAge) = age = newAge;
@@ -15,4 +15,4 @@ blueprint for Person {
 person = make Person;
 person.setName("Bryan");
 print(person.name);
-print(person.age);
+print(person.gender);

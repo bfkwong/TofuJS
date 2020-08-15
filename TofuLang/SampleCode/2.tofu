@@ -2,4 +2,9 @@
 
 TotalBillCost(taxrate, subtotal) = subtotal * taxrate + subtotal;
 
-print(TotalBillCost(0.075, 10));
+while(true) is true then {
+    inputTaxRate = input("Tax Rates: ");
+    inputSubtotal = input("Subtotal: ");
+
+    print(TotalBillCost(toNumber(inputTaxRate), toNumber(inputSubtotal)));
+} 
