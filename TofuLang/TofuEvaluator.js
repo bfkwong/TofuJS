@@ -341,8 +341,6 @@ class TofuEvaluator {
                 }
             }
 
-
-
             let newState = {};
             for (let i = 0; i < closure.code.params.length; i++) {
                 newState[closure.code.params[i]] = this.evalExpression(exp.args[i], states);
@@ -451,10 +449,11 @@ class TofuEvaluator {
             return this.evalExpression(exp.exp);
         }
         if (exp instanceof ast.EXP_MAP) {
+            let newMap = {};
             Object.keys(exp.map).forEach(key => {
-                exp.map[key] = this.evalExpression(exp.map[key]);
+                newMap[key.slice(1,-1)] = this.evalExpression(exp.map[key]);
             });
-            return exp.map;
+            return new HashMap(newMap);
         }
         return exp;
     }

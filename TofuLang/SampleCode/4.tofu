@@ -1,6 +1,6 @@
 x = 3;
 x;
 y;
-y = [1,2,3];
+y = {"one": 1};
 
-print(y(0));
+print(y("one"));
