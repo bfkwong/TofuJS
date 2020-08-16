@@ -17,7 +17,8 @@ stmt:
 	| expStmt
 	| ifStmt
 	| printStmt
-	| retStmt;
+	| retStmt
+	| forStmt;
 
 retStmt: 'return' (expression)?;
 
@@ -31,6 +32,8 @@ ifStmt:
 	)?;
 
 printStmt: 'print' '(' expression? ')' ';';
+
+forStmt: 'for' 'each' IDENTIFIER 'in' expression blockStmt;
 
 iterationStmt: 'while' '(' expression ')' 'is' 'true' blockStmt;
 
@@ -68,6 +71,7 @@ primaryExpression:
 	| IDENTIFIER								# IdentifierExpression
 	| 'make' IDENTIFIER							# MakeExpression
 	| '[' (expression (',' expression))? ']'	# ListExpression
+	| '{' (primaryExpression ':' expression ',')* (primaryExpression ':' expression)? '}' # MapExpression
 	;
 
 STRING:

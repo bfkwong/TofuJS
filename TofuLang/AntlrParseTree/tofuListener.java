@@ -109,6 +109,16 @@ public interface tofuListener extends ParseTreeListener {
 	 */
 	void exitPrintStmt(tofuParser.PrintStmtContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link tofuParser#forStmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterForStmt(tofuParser.ForStmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link tofuParser#forStmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitForStmt(tofuParser.ForStmtContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link tofuParser#iterationStmt}.
 	 * @param ctx the parse tree
 	 */
@@ -350,4 +360,16 @@ public interface tofuListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitListExpression(tofuParser.ListExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code MapExpression}
+	 * labeled alternative in {@link tofuParser#primaryExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterMapExpression(tofuParser.MapExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code MapExpression}
+	 * labeled alternative in {@link tofuParser#primaryExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitMapExpression(tofuParser.MapExpressionContext ctx);
 }

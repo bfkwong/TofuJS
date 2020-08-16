@@ -40,6 +40,11 @@ class ListValue {
     }
 }
 
+class HashMap {
+    constructor(map) {
+        this.map = map;
+    }
+}
 
 function declare(states, id, value) {
     states[states.length - 1][id] = value;
@@ -306,7 +311,7 @@ class TofuEvaluator {
             }
             if (funcExpr instanceof ListValue) {
                 if (exp.args.length === 0) {
-                    triggerError("Give a value to access list")
+                    triggerError("Give a value to access list");
                     return undefined;
                 }
                 if (exp.args.length === 1) {
@@ -321,8 +326,21 @@ class TofuEvaluator {
                     triggerError("Incorrect number of arguments");
                     return undefined;
                 }
-
             }
+            if (funcExpr instanceof HashMap) {
+                if (exp.args.length === 0) {
+                    triggerError("Give a value to access the map");
+                    return;
+                }
+                if (exp.args.length === 1) {
+                    return funcExpr.map[this.evalExpression(exp.args[0])];
+                }
+                if (exp.args.length > 1) {
+                    triggerError("HashMap access only takes 1 argument");
+                    return;
+                }
+            }
+
 
 
             let newState = {};
@@ -428,6 +446,15 @@ class TofuEvaluator {
         }
         if (exp instanceof ast.EXP_LIST) {
             return new ListValue(exp.exprs.map(exp => this.evalExpression(exp, states)));
+        }
+        if (exp instanceof ast.EXP_NEST) {
+            return this.evalExpression(exp.exp);
+        }
+        if (exp instanceof ast.EXP_MAP) {
+            Object.keys(exp.map).forEach(key => {
+                exp.map[key] = this.evalExpression(exp.map[key]);
+            });
+            return exp.map;
         }
         return exp;
     }

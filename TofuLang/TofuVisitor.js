@@ -70,9 +70,19 @@ class TofuVisitor {
             return this.visitIfStatement(ctx.ifStmt());
         } else if (ctx.printStmt()) {
             return this.visitPrintStatement(ctx.printStmt());
-        } else {
+        } else if (ctx.retStmt()) {
             return this.visitReturnStatement(ctx.retStmt());
+        } else {
+            return this.visitForStatement(ctx.forStmt());
         }
+    }
+
+    visitForStatement(ctx) {
+        let id = ctx.IDENTIFIER().getText();
+        let itemList = this.visitExpression(ctx.expression());
+        let block = this.visitBlockStatement(ctx.blockStmt());
+
+        return new ast.ST_FOR(id, itemList, block);
     }
 
     visitIterationStatement(ctx) {
@@ -259,6 +269,16 @@ class TofuVisitor {
             case "NestedExpressionContext":
                 let nestedExpr = this.visitExpression(ctx.expression());
                 expr = nestedExpr;
+                break;
+            case "MapExpressionContext":
+                let keys = ctx.STRING();
+                let values = ctx.expression();
+
+                let outputMap = {};
+                for (let i = 0; i < keys.length; i++) {
+                    outputMap[keys[i].getText()] = this.visitExpression(values[i]);
+                }
+                expr = new ast.EXP_MAP(outputMap);
                 break;
             default:
                 throw new Error("Error: Expression Type Unmatched");

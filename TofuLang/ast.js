@@ -128,6 +128,13 @@ class EXP_LIST {
 }
 exports.EXP_LIST = EXP_LIST;
 
+class EXP_MAP {
+    constructor(map) {
+        this.map = map;
+    }
+}
+exports.EXP_MAP = EXP_MAP;
+
 class EXP_NEST {
     constructor(expr) {
         this.expr = expr;
@@ -172,6 +179,15 @@ class ST_WHILE {
     }
 }
 exports.ST_WHILE = ST_WHILE;
+
+class ST_FOR {
+    constructor(item, itemList, code) {
+        this.item = item;
+        this.itemList = itemList;
+        this.code = code;
+    }
+}
+exports.ST_FOR = ST_FOR;
 
 class ST_RETURN {
     constructor(exp) {

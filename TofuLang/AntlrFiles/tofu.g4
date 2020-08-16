@@ -3,7 +3,7 @@ grammar tofu;
 program: (funDecl | classDecls | stmt)*;
 
 classDecls:
-	'blueprint' 'for' IDENTIFIER '{' (funDecl | stmt)* '}';
+	'blueprint' 'for' IDENTIFIER '{' (funDecl | stmt)* '}' # class;
 
 funDecl:
 	IDENTIFIER parameter '=' stmt
@@ -17,9 +17,10 @@ stmt:
 	| expStmt
 	| ifStmt
 	| printStmt
-	| retStmt;
+	| retStmt
+	| forStmt;
 
-retStmt: 'return' (expression)? ';';
+retStmt: 'return' (expression)?;
 
 expStmt: expression ';';
 
@@ -32,25 +33,23 @@ ifStmt:
 
 printStmt: 'print' '(' expression? ')' ';';
 
-iterationStmt: 'while' '(' expression ')' 'is' 'true' 'then' blockStmt;
+forStmt: 'for' 'each' IDENTIFIER 'in' expression blockStmt;
+
+iterationStmt: 'while' '(' expression ')' 'is' 'true' blockStmt;
 
 expression: logORExpression ('=' expression)?;
 
-logORExpression: logANDExpression ('or' logANDExpression)*;
+logORExpression: logANDExpression ('or' logANDExpression)?;
 
-logANDExpression: eqExpression ('and' eqExpression)*;
+logANDExpression: eqExpression ('and' eqExpression)?;
 
-eqExpression: relExpression (eqOp relExpression)*;
-eqOp: '==' | '!=';
+eqExpression: relExpression (eqOp=('==' | '!=') relExpression)?;
 
-relExpression: addExpression (relOp addExpression)*;
-relOp: '>' | '>=' | '<' | '<=';
+relExpression: addExpression (relOp=('>' | '>=' | '<' | '<=') addExpression)?;
 
-addExpression: multExpression (addOp multExpression)*;
-addOp: '+' | '-';
+addExpression: multExpression (addOp=('+' | '-') multExpression)?;
 
-multExpression: unaryExpression (multOp unaryExpression)*;
-multOp: '*' | '/';
+multExpression: unaryExpression (multOp=('*' | '/') unaryExpression)?;
 
 unaryExpression: (unaryOp=('!' | '-'))? callMemExpression;
 
@@ -72,6 +71,7 @@ primaryExpression:
 	| IDENTIFIER								# IdentifierExpression
 	| 'make' IDENTIFIER							# MakeExpression
 	| '[' (expression (',' expression)*) ']'	# ListExpression
+	| '{' (STRING ':' expression ',')* (STRING ':' expression)? '}' # MapExpression
 	;
 
 STRING:

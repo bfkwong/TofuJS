@@ -135,6 +135,18 @@ public class tofuBaseListener implements tofuListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterForStmt(tofuParser.ForStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitForStmt(tofuParser.ForStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterIterationStmt(tofuParser.IterationStmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -394,6 +406,18 @@ public class tofuBaseListener implements tofuListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitListExpression(tofuParser.ListExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMapExpression(tofuParser.MapExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMapExpression(tofuParser.MapExpressionContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

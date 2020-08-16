@@ -20,12 +20,12 @@ tofuListener.prototype.exitProgram = function(ctx) {
 };
 
 
-// Enter a parse tree produced by tofuParser#classDecls.
-tofuListener.prototype.enterClassDecls = function(ctx) {
+// Enter a parse tree produced by tofuParser#class.
+tofuListener.prototype.enterClass = function(ctx) {
 };
 
-// Exit a parse tree produced by tofuParser#classDecls.
-tofuListener.prototype.exitClassDecls = function(ctx) {
+// Exit a parse tree produced by tofuParser#class.
+tofuListener.prototype.exitClass = function(ctx) {
 };
 
 
@@ -101,6 +101,15 @@ tofuListener.prototype.exitPrintStmt = function(ctx) {
 };
 
 
+// Enter a parse tree produced by tofuParser#forStmt.
+tofuListener.prototype.enterForStmt = function(ctx) {
+};
+
+// Exit a parse tree produced by tofuParser#forStmt.
+tofuListener.prototype.exitForStmt = function(ctx) {
+};
+
+
 // Enter a parse tree produced by tofuParser#iterationStmt.
 tofuListener.prototype.enterIterationStmt = function(ctx) {
 };
@@ -146,30 +155,12 @@ tofuListener.prototype.exitEqExpression = function(ctx) {
 };
 
 
-// Enter a parse tree produced by tofuParser#eqOp.
-tofuListener.prototype.enterEqOp = function(ctx) {
-};
-
-// Exit a parse tree produced by tofuParser#eqOp.
-tofuListener.prototype.exitEqOp = function(ctx) {
-};
-
-
 // Enter a parse tree produced by tofuParser#relExpression.
 tofuListener.prototype.enterRelExpression = function(ctx) {
 };
 
 // Exit a parse tree produced by tofuParser#relExpression.
 tofuListener.prototype.exitRelExpression = function(ctx) {
-};
-
-
-// Enter a parse tree produced by tofuParser#relOp.
-tofuListener.prototype.enterRelOp = function(ctx) {
-};
-
-// Exit a parse tree produced by tofuParser#relOp.
-tofuListener.prototype.exitRelOp = function(ctx) {
 };
 
 
@@ -182,30 +173,12 @@ tofuListener.prototype.exitAddExpression = function(ctx) {
 };
 
 
-// Enter a parse tree produced by tofuParser#addOp.
-tofuListener.prototype.enterAddOp = function(ctx) {
-};
-
-// Exit a parse tree produced by tofuParser#addOp.
-tofuListener.prototype.exitAddOp = function(ctx) {
-};
-
-
 // Enter a parse tree produced by tofuParser#multExpression.
 tofuListener.prototype.enterMultExpression = function(ctx) {
 };
 
 // Exit a parse tree produced by tofuParser#multExpression.
 tofuListener.prototype.exitMultExpression = function(ctx) {
-};
-
-
-// Enter a parse tree produced by tofuParser#multOp.
-tofuListener.prototype.enterMultOp = function(ctx) {
-};
-
-// Exit a parse tree produced by tofuParser#multOp.
-tofuListener.prototype.exitMultOp = function(ctx) {
 };
 
 
@@ -332,6 +305,15 @@ tofuListener.prototype.enterListExpression = function(ctx) {
 
 // Exit a parse tree produced by tofuParser#ListExpression.
 tofuListener.prototype.exitListExpression = function(ctx) {
+};
+
+
+// Enter a parse tree produced by tofuParser#MapExpression.
+tofuListener.prototype.enterMapExpression = function(ctx) {
+};
+
+// Exit a parse tree produced by tofuParser#MapExpression.
+tofuListener.prototype.exitMapExpression = function(ctx) {
 };
 
 
