@@ -8,7 +8,7 @@ const TofuParser = require('./AntlrFiles/tofuParser').tofuParser;
 const TofuVisitor = require('./TofuVisitor').TofuVisitor;
 const TofuEvaluator = require('./TofuEvaluator').TofuEvaluator;
 
-const input = fs.readFileSync('./SampleCode/4.tofu', 'utf8');
+const input = fs.readFileSync('./SampleCode/1.tofu', 'utf8');
 
 const chars = new antlr4.InputStream(input);
 const lexer = new TofuLexer(chars);

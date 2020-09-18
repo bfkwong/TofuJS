@@ -47,9 +47,13 @@ eqExpression: relExpression (eqOp=('==' | '!=') relExpression)?;
 
 relExpression: addExpression (relOp=('>' | '>=' | '<' | '<=') addExpression)?;
 
-addExpression: multExpression (addOp=('+' | '-') multExpression)?;
+addExpression: multExpression (addOp multExpression)*;
 
-multExpression: unaryExpression (multOp=('*' | '/') unaryExpression)?;
+addOp: '+' | '-';
+
+multExpression: unaryExpression (multOp unaryExpression)*;
+
+multOp: '*' | '/';
 
 unaryExpression: (unaryOp=('!' | '-'))? callMemExpression;
 
