@@ -20,7 +20,7 @@ stmt:
 	| retStmt
 	| forStmt;
 
-retStmt: 'return' (expression)?;
+retStmt: 'return' expression? ';';
 
 expStmt: expression ';';
 
@@ -43,9 +43,13 @@ logORExpression: logANDExpression ('or' logANDExpression)?;
 
 logANDExpression: eqExpression ('and' eqExpression)?;
 
-eqExpression: relExpression (eqOp=('==' | '!=') relExpression)?;
+eqExpression: relExpression (eqOp relExpression)?;
 
-relExpression: addExpression (relOp=('>' | '>=' | '<' | '<=') addExpression)?;
+eqOp: '==' | '!=';
+
+relExpression: addExpression (relOp addExpression)?;
+
+relOp: '>' | '>=' | '<' | '<=';
 
 addExpression: multExpression (addOp multExpression)*;
 

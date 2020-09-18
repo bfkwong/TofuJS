@@ -1,10 +1,11 @@
 "calculate tax rates";
 
 TotalBillCost(taxrate, subtotal) = subtotal * taxrate + subtotal;
+print(TotalBillCost(3, 3));
 
-while(true) is true then {
-    inputTaxRate = input("Tax Rates: ");
-    inputSubtotal = input("Subtotal: ");
+f(x,y) = {
+    x + y;
+    return x;
+}
 
-    print(TotalBillCost(toNumber(inputTaxRate), toNumber(inputSubtotal)));
-} 
+print(f(3,2));

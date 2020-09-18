@@ -155,12 +155,30 @@ tofuListener.prototype.exitEqExpression = function(ctx) {
 };
 
 
+// Enter a parse tree produced by tofuParser#eqOp.
+tofuListener.prototype.enterEqOp = function(ctx) {
+};
+
+// Exit a parse tree produced by tofuParser#eqOp.
+tofuListener.prototype.exitEqOp = function(ctx) {
+};
+
+
 // Enter a parse tree produced by tofuParser#relExpression.
 tofuListener.prototype.enterRelExpression = function(ctx) {
 };
 
 // Exit a parse tree produced by tofuParser#relExpression.
 tofuListener.prototype.exitRelExpression = function(ctx) {
+};
+
+
+// Enter a parse tree produced by tofuParser#relOp.
+tofuListener.prototype.enterRelOp = function(ctx) {
+};
+
+// Exit a parse tree produced by tofuParser#relOp.
+tofuListener.prototype.exitRelOp = function(ctx) {
 };
 
 

@@ -1,5 +1,3 @@
-x = input();
-
 blueprint for Person {
     name;
     gender;
