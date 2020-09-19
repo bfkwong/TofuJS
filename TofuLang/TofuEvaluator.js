@@ -105,7 +105,6 @@ class TofuEvaluator {
     }
 
     evalStatements(stmts, states) {
-        // console.log(util.inspect(states, false, null, true));
         stmts.forEach((s) => {
             if (s instanceof ast.ST_EXP) {
                 states = this.evalExpressionStatement(s, states);
