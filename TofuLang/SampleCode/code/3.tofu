@@ -12,8 +12,6 @@ blueprint for Person {
 
 person = make Person;
 person.setName("Bryan");
-
-person.age = 20;
-
+person.name = "Bryan";
 print(person.name);
 print(person.gender);

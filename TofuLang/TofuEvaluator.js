@@ -28,6 +28,13 @@ class ClosureValue {
   }
 }
 
+class FieldValue {
+  constructor(field, env) {
+    this.field = field;
+    this.env = env;
+  }
+}
+
 class ObjectValue {
   constructor(env) {
     this.env = env;
@@ -115,7 +122,7 @@ class TofuEvaluator {
         states = this.evalIfStatement(s, states);
       } else if (s instanceof ast.ST_WHILE) {
         states = this.evalWhileStatement(s, states);
-      } else {
+      } else if (s instanceof ast.ST_RETURN) {
         this.evalReturnStatement(s, states);
       }
     });
@@ -132,7 +139,7 @@ class TofuEvaluator {
       try {
         getFromStates(states, stmt.exp.id);
       } catch (err) {
-        states.reverse()[0][stmt.exp.id] = null;
+        states.reverse()[0][stmt.exp.id] = new UndefinedValue();
         return states;
       }
     }
@@ -142,8 +149,33 @@ class TofuEvaluator {
 
   evalPrintStatement(stmt, states) {
     const res = this.evalExpression(stmt.exp, states);
+    if (res instanceof NumValue) {
+      console.log(res.num);
+      return states;
+    }
+    if (res instanceof StringValue) {
+      console.log(res.str);
+      return states;
+    }
+    if (res instanceof BoolValue) {
+      console.log(res.bool);
+      return states;
+    }
+    if (res instanceof UndefinedValue) {
+      console.log(undefined);
+      return states;
+    }
     if (res instanceof ListValue) {
       console.log(res.list);
+      return states;
+    }
+    if (res instanceof FieldValue) {
+      const fv = getFromStates(res.env, res.field);
+      if (fv instanceof UndefinedValue) {
+        console.log(undefined);
+      } else {
+        console.log(fv);
+      }
       return states;
     }
     console.log(res);
@@ -182,7 +214,7 @@ class TofuEvaluator {
       return false;
     }
     if (exp instanceof ast.EXP_UNDEFINED) {
-      return undefined;
+      return new UndefinedValue();
     }
     if (exp instanceof ast.EXP_NUM) {
       return exp.num;
@@ -200,7 +232,9 @@ class TofuEvaluator {
       if (lhsExp instanceof ast.EXP_ID) {
         return declare(states, lhsExp.id, rhsExp);
       }
-      // return rhsExp;
+
+      const fieldval = this.evalExpression(lhsExp, states);
+      return declare(fieldval.env, fieldval.field, rhsExp);
     }
     if (exp instanceof ast.EXP_BINARY) {
       const areNum = (n1, n2) => typeof n1 === "number" && typeof n2 === "number";
@@ -285,7 +319,6 @@ class TofuEvaluator {
       if (funcExpr instanceof ListValue) {
         if (exp.args.length === 0) {
           triggerError("Give a value to access list");
-          return undefined;
         }
         if (exp.args.length === 1) {
           return funcExpr.list[this.evalExpression(exp.args[0])];
@@ -297,13 +330,11 @@ class TofuEvaluator {
         }
         if (exp.args.length > 2) {
           triggerError("Incorrect number of arguments");
-          return undefined;
         }
       }
       if (funcExpr instanceof HashMap) {
         if (exp.args.length === 0) {
           triggerError("Give a value to access the map");
-          return;
         }
         if (exp.args.length === 1) {
           return funcExpr.map[this.evalExpression(exp.args[0])];
@@ -326,69 +357,15 @@ class TofuEvaluator {
       if (funcStmt instanceof ast.ST_EXP) {
         return this.evalExpression(funcStmt.exp, envState);
       }
-      if (funcStmt instanceof ast.ST_IF) {
-        const guardRes = this.evalExpression(funcStmt.guard, envState);
-        if (guardRes) {
-          try {
-            this.evalBlockStatement(funcStmt.th, envState);
-          } catch (e) {
-            if (e instanceof ReturnValue) {
-              return e.value;
-            } else {
-              throw e;
-            }
-          }
+
+      try {
+        this.evalStatements([funcStmt], envState);
+      } catch (e) {
+        if (e instanceof ReturnValue) {
+          return e.value;
         } else {
-          try {
-            this.evalBlockStatement(funcStmt.el, envState);
-          } catch (e) {
-            if (e instanceof ReturnValue) {
-              return e.value;
-            } else {
-              throw e;
-            }
-          }
+          throw e;
         }
-      }
-      if (funcStmt instanceof ast.ST_PRINT) {
-        console.log(this.evalExpression(funcStmt.exp, envState));
-        return undefined;
-      }
-      if (funcStmt instanceof ast.ST_WHILE) {
-        let guardRes = this.evalExpression(funcStmt.guard, envState);
-
-        while (guardRes) {
-          try {
-            this.evalBlockStatement(funcStmt.body, envState);
-          } catch (e) {
-            if (e instanceof ReturnValue) {
-              return e.value;
-            } else {
-              throw e;
-            }
-          }
-
-          guardRes = this.evalExpression(funcStmt.guard, envState);
-        }
-        return undefined;
-      }
-      if (funcStmt instanceof ast.ST_BLOCK) {
-        try {
-          this.evalBlockStatement(funcStmt, envState);
-        } catch (e) {
-          if (e instanceof ReturnValue) {
-            return e.value;
-          } else {
-            throw e;
-          }
-        }
-        return undefined;
-      }
-      if (funcStmt instanceof ast.ST_RETURN) {
-        if (funcStmt.exp) {
-          return this.evalExpression(funcStmt.exp, envState);
-        }
-        return undefined;
       }
     }
     if (exp instanceof ast.EXP_MAKE) {
@@ -413,7 +390,8 @@ class TofuEvaluator {
       if (fieldState instanceof ClosureValue) {
         return new ClosureValue(fieldState.code, object.env);
       }
-      return fieldState;
+
+      return new FieldValue(exp.field, object.env);
     }
     if (exp instanceof ast.EXP_LIST) {
       return new ListValue(exp.exprs.map((exp) => this.evalExpression(exp, states)));
