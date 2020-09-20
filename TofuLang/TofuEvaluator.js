@@ -154,30 +154,33 @@ class TofuEvaluator {
   }
 
   evalPrintStatement(res, states) {
-    if (res instanceof NumValue) {
-      console.log(res.num);
-      return states;
+    function extractText(value) {
+      switch (value.constructor.name) {
+        case "NumValue":
+          return value.num;
+        case "StringValue":
+          return value.str;
+        case "BoolValue":
+          return value.bool;
+        case "UndefinedValue":
+          return undefined;
+        case "FieldValue":
+          return extractText(getFromStates(value.env, value.field));
+        default:
+          return value;
+      }
     }
-    if (res instanceof StringValue) {
-      console.log(res.str);
-      return states;
-    }
-    if (res instanceof BoolValue) {
-      console.log(res.bool);
-      return states;
-    }
-    if (res instanceof UndefinedValue) {
-      console.log(undefined);
-      return states;
-    }
+
     if (res instanceof ListValue) {
-      console.log(res.list);
-      return states;
-    }
-    if (res instanceof FieldValue) {
-      const fv = getFromStates(res.env, res.field);
-      this.evalPrintStatement(fv);
-      return states;
+      console.log(res.list.map((v) => extractText(v)));
+    } else if (res instanceof HashMap) {
+      const newmap = {};
+      Object.keys(res.map).forEach((key) => {
+        newmap[key] = extractText(res.map[key]);
+      });
+      console.log(newmap);
+    } else {
+      console.log(extractText(res));
     }
     return states;
   }
@@ -343,12 +346,12 @@ class TofuEvaluator {
           triggerError("Give a value to access list");
         }
         if (exp.args.length === 1) {
-          return funcExpr.list[this.evalExpression(exp.args[0])];
+          return funcExpr.list[this.evalExpression(exp.args[0]).num];
         }
         if (exp.args.length === 2) {
-          const arg0val = this.evalExpression(exp.args[0]);
-          const arg1val = this.evalExpression(exp.args[1]);
-          return funcExpr.list.slice(arg0val, arg1val);
+          const arg0val = this.evalExpression(exp.args[0]).num;
+          const arg1val = this.evalExpression(exp.args[1]).num;
+          return new ListValue(funcExpr.list.slice(arg0val, arg1val));
         }
         if (exp.args.length > 2) {
           triggerError("Incorrect number of arguments");
@@ -363,7 +366,6 @@ class TofuEvaluator {
         }
         if (exp.args.length > 1) {
           triggerError("HashMap access only takes 1 argument");
-          return;
         }
       }
 
