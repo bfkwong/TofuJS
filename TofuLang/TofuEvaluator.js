@@ -53,6 +53,11 @@ class HashMap {
   }
 }
 
+const areNum = (n1, n2) => n1 instanceof NumValue && n2 instanceof NumValue;
+const areBool = (n1, n2) => n1 instanceof BoolValue && n2 instanceof BoolValue;
+const areStr = (n1, n2) => n1 instanceof StringValue && n2 instanceof StringValue;
+const areUndef = (n1, n2) => n1 instanceof UndefinedValue && n2 instanceof UndefinedValue;
+
 function declare(states, identifier, rhsExp) {
   for (let state of states.reverse()) {
     if (state[identifier] !== undefined) {
@@ -115,7 +120,8 @@ class TofuEvaluator {
       if (s instanceof ast.ST_EXP) {
         states = this.evalExpressionStatement(s, states);
       } else if (s instanceof ast.ST_PRINT) {
-        states = this.evalPrintStatement(s, states);
+        const res = this.evalExpression(s.exp, states);
+        states = this.evalPrintStatement(res, states);
       } else if (s instanceof ast.ST_BLOCK) {
         states = this.evalBlockStatement(s, states);
       } else if (s instanceof ast.ST_IF) {
@@ -147,8 +153,7 @@ class TofuEvaluator {
     return states;
   }
 
-  evalPrintStatement(stmt, states) {
-    const res = this.evalExpression(stmt.exp, states);
+  evalPrintStatement(res, states) {
     if (res instanceof NumValue) {
       console.log(res.num);
       return states;
@@ -171,14 +176,9 @@ class TofuEvaluator {
     }
     if (res instanceof FieldValue) {
       const fv = getFromStates(res.env, res.field);
-      if (fv instanceof UndefinedValue) {
-        console.log(undefined);
-      } else {
-        console.log(fv);
-      }
+      this.evalPrintStatement(fv);
       return states;
     }
-    console.log(res);
     return states;
   }
 
@@ -220,7 +220,7 @@ class TofuEvaluator {
       return new NumValue(exp.num);
     }
     if (exp instanceof ast.EXP_STR) {
-      return exp.str.slice(1, -1);
+      return new StringValue(exp.str.slice(1, -1));
     }
     if (exp instanceof ast.EXP_ID) {
       return getFromStates(states, exp.id);
@@ -237,11 +237,7 @@ class TofuEvaluator {
       return declare(fieldval.env, fieldval.field, rhsExp);
     }
     if (exp instanceof ast.EXP_BINARY) {
-      const areNum = (n1, n2) => n1 instanceof NumValue && n2 instanceof NumValue;
-      const areBool = (n1, n2) => n1 instanceof BoolValue && n2 instanceof BoolValue;
-      const areStr = (n1, n2) => ["string"].includes(typeof n1) && ["string"].includes(typeof n2);
-
-      const lft = this.evalExpression(exp.lft, states);
+      let lft = this.evalExpression(exp.lft, states);
       const opr = exp.opr;
 
       if (opr instanceof ast.BOP_AND && lft.bool === false) {
@@ -251,11 +247,18 @@ class TofuEvaluator {
         return new BoolValue(true);
       }
 
-      const rht = this.evalExpression(exp.rht, states);
+      let rht = this.evalExpression(exp.rht, states);
+
+      if (lft instanceof FieldValue) {
+        lft = getFromStates(lft.env, lft.field);
+      }
+      if (rht instanceof FieldValue) {
+        rht = getFromStates(rht.env, rht.field);
+      }
 
       if (opr instanceof ast.BOP_PLUS) {
         if (areNum(lft, rht)) return new NumValue(lft.num + rht.num);
-        else if (areStr(lft, rht)) return lft + rht;
+        else if (areStr(lft, rht)) return new StringValue(lft.str + rht.str);
         else triggerError("Error: only subtract num");
       }
       if (opr instanceof ast.BOP_MINUS) {
@@ -274,33 +277,37 @@ class TofuEvaluator {
         return areBool(lft, rht) ? lft.bool || rht.bool : triggerError("Error: only use logical `or` on booleans");
       }
       if (opr instanceof ast.BOP_LT) {
-        return areNum(lft, rht)
-          ? new BoolValue(lft.num < rht.num)
-          : triggerError("Error: only use comparator on string or num");
+        if (areNum(lft, rht)) return new BoolValue(lft.num < rht.num);
+        else if (areStr(lft, rht)) return new BoolValue(lft.str < rht.str);
+        else triggerError("Error: only use comparator on string or num");
       }
       if (opr instanceof ast.BOP_LE) {
-        return areNum(lft, rht)
-          ? new BoolValue(lft.num <= rht.num)
-          : triggerError("Error: only use comparator on string or num");
+        if (areNum(lft, rht)) return new BoolValue(lft.num <= rht.num);
+        else if (areStr(lft, rht)) return new BoolValue(lft.str <= rht.str);
+        else triggerError("Error: only use comparator on string or num");
       }
       if (opr instanceof ast.BOP_GT) {
-        return areNum(lft, rht)
-          ? new BoolValue(lft.num > rht.num)
-          : triggerError("Error: only use comparator on string or num");
+        if (areNum(lft, rht)) return new BoolValue(lft.num > rht.num);
+        else if (areStr(lft, rht)) return new BoolValue(lft.str > rht.str);
+        else triggerError("Error: only use comparator on string or num");
       }
       if (opr instanceof ast.BOP_GE) {
-        return areNum(lft, rht)
-          ? new BoolValue(lft.num >= rht.num)
-          : triggerError("Error: only use comparator on string or num");
+        if (areNum(lft, rht)) return new BoolValue(lft.num >= rht.num);
+        else if (areStr(lft, rht)) return new BoolValue(lft.str >= rht.str);
+        else triggerError("Error: only use comparator on string or num");
       }
       if (opr instanceof ast.BOP_EQ) {
         if (areBool(lft, rht)) return new BoolValue(lft.bool === rht.bool);
         else if (areNum(lft, rht)) return new BoolValue(lft.num === rht.num);
+        else if (areStr(lft, rht)) return new BoolValue(lft.str === rht.str);
+        else if (areUndef(lft, rht)) return new BoolValue(true);
         else return new BoolValue(lft === rht);
       }
       if (opr instanceof ast.BOP_NE) {
         if (areBool(lft, rht)) return new BoolValue(lft.bool !== rht.bool);
         else if (areNum(lft, rht)) return new BoolValue(lft.num !== rht.num);
+        else if (areStr(lft, rht)) return new BoolValue(lft.str !== rht.str);
+        else if (areUndef(lft, rht)) return new BoolValue(false);
         else return new BoolValue(lft !== rht);
       }
       throw new Error("Error: unexpected binary operator");
@@ -352,7 +359,7 @@ class TofuEvaluator {
           triggerError("Give a value to access the map");
         }
         if (exp.args.length === 1) {
-          return funcExpr.map[this.evalExpression(exp.args[0])];
+          return funcExpr.map[this.evalExpression(exp.args[0]).str];
         }
         if (exp.args.length > 1) {
           triggerError("HashMap access only takes 1 argument");

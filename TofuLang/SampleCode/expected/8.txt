@@ -1,0 +1,7 @@
+Tofu
+female
+10
+1
+Domestic Shorthair
+true
+undefined
