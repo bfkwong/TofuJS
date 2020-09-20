@@ -189,7 +189,7 @@ class TofuEvaluator {
   evalIfStatement(stmt, states) {
     const guardRes = this.evalExpression(stmt.guard, states);
 
-    if (guardRes) {
+    if (guardRes.bool) {
       return this.evalBlockStatement(stmt.th, states);
     } else {
       return this.evalBlockStatement(stmt.el, states);
@@ -199,7 +199,7 @@ class TofuEvaluator {
   evalWhileStatement(stmt, states) {
     let guardRes = this.evalExpression(stmt.guard, states);
 
-    while (guardRes) {
+    while (guardRes.bool) {
       this.evalBlockStatement(stmt.body, states);
       guardRes = this.evalExpression(stmt.guard, states);
     }
@@ -208,10 +208,10 @@ class TofuEvaluator {
 
   evalExpression(exp, states) {
     if (exp instanceof ast.EXP_TRUE) {
-      return true;
+      return new BoolValue(true);
     }
     if (exp instanceof ast.EXP_FALSE) {
-      return false;
+      return new BoolValue(false);
     }
     if (exp instanceof ast.EXP_UNDEFINED) {
       return new UndefinedValue();
@@ -238,18 +238,18 @@ class TofuEvaluator {
     }
     if (exp instanceof ast.EXP_BINARY) {
       const areNum = (n1, n2) => typeof n1 === "number" && typeof n2 === "number";
-      const areBool = (n1, n2) => typeof n1 === "boolean" && typeof n2 === "boolean";
+      const areBool = (n1, n2) => n1 instanceof BoolValue && n2 instanceof BoolValue;
       const areNumOrStr = (n1, n2) =>
         ["number", "string"].includes(typeof n1) && ["number", "string"].includes(typeof n2);
 
       const lft = this.evalExpression(exp.lft, states);
       const opr = exp.opr;
 
-      if (opr instanceof ast.BOP_AND && lft === false) {
-        return false;
+      if (opr instanceof ast.BOP_AND && lft.bool === false) {
+        return new BoolValue(false);
       }
-      if (opr instanceof ast.BOP_OR && lft === true) {
-        return true;
+      if (opr instanceof ast.BOP_OR && lft.bool === true) {
+        return new BoolValue(true);
       }
 
       const rht = this.evalExpression(exp.rht, states);
@@ -267,28 +267,42 @@ class TofuEvaluator {
         return areNum(lft, rht) ? lft - rht : triggerError("Error: only subtract num");
       }
       if (opr instanceof ast.BOP_AND) {
-        return areBool(lft, rht) ? lft && rht : triggerError("Error: only use logical `and` on booleans");
+        return areBool(lft, rht) ? lft.bool && rht.bool : triggerError("Error: only use logical `and` on booleans");
       }
       if (opr instanceof ast.BOP_OR) {
-        return areBool(lft, rht) ? lft || rht : triggerError("Error: only use logical `or` on booleans");
+        return areBool(lft, rht) ? lft.bool || rht.bool : triggerError("Error: only use logical `or` on booleans");
       }
       if (opr instanceof ast.BOP_LT) {
-        return areNumOrStr(lft, rht) ? lft < rht : triggerError("Error: only use comparator on string or num");
+        return areNumOrStr(lft, rht)
+          ? new BoolValue(lft < rht)
+          : triggerError("Error: only use comparator on string or num");
       }
       if (opr instanceof ast.BOP_LE) {
-        return areNumOrStr(lft, rht) ? lft <= rht : triggerError("Error: only use comparator on string or num");
+        return areNumOrStr(lft, rht)
+          ? new BoolValue(lft <= rht)
+          : triggerError("Error: only use comparator on string or num");
       }
       if (opr instanceof ast.BOP_GT) {
-        return areNumOrStr(lft, rht) ? lft > rht : triggerError("Error: only use comparator on string or num");
+        return areNumOrStr(lft, rht)
+          ? new BoolValue(lft > rht)
+          : triggerError("Error: only use comparator on string or num");
       }
       if (opr instanceof ast.BOP_GE) {
-        return areNumOrStr(lft, rht) ? lft >= rht : triggerError("Error: only use comparator on string or num");
+        return areNumOrStr(lft, rht)
+          ? new BoolValue(lft >= rht)
+          : triggerError("Error: only use comparator on string or num");
       }
       if (opr instanceof ast.BOP_EQ) {
-        return lft === rht;
+        if (lft instanceof BoolValue && rht instanceof BoolValue) {
+          return new BoolValue(lft.bool === rht.bool);
+        }
+        return new BoolValue(lft === rht);
       }
       if (opr instanceof ast.BOP_NE) {
-        return lft !== rht;
+        if (lft instanceof BoolValue && rht instanceof BoolValue) {
+          return new BoolValue(lft.bool !== rht.bool);
+        }
+        return new BoolValue(lft !== rht);
       }
       throw new Error("Error: unexpected binary operator");
     }
@@ -300,7 +314,9 @@ class TofuEvaluator {
         return typeof opndRes === "number" ? -1 * opndRes : triggerError("Error: can only use `-` on number");
       }
       if (opr instanceof ast.UOP_NOT) {
-        return typeof opndRes === "boolean" ? !opndRes : triggerError("Error: can only use `!` on booleans");
+        return opndRes instanceof BoolValue
+          ? new BoolValue(!opndRes.bool)
+          : triggerError("Error: can only use `!` on booleans");
       }
       throw new Error("Error: unexpected unary operators");
     }
