@@ -46,8 +46,15 @@ class HashMap {
   }
 }
 
-function declare(states, id, value) {
-  states[states.length - 1][id] = value;
+function declare(states, identifier, rhsExp) {
+  for (let state of states.reverse()) {
+    if (state[identifier] !== undefined) {
+      state[identifier] = rhsExp;
+      return rhsExp;
+    }
+  }
+  states[states.length - 1][identifier] = rhsExp;
+  return rhsExp;
 }
 
 function triggerError(msg) {
@@ -184,30 +191,16 @@ class TofuEvaluator {
       return exp.str.slice(1, -1);
     }
     if (exp instanceof ast.EXP_ID) {
-      for (let state of states.reverse()) {
-        if (state[exp.id] !== undefined) {
-          return this.evalExpression(state[exp.id], states);
-        }
-      }
-      throw new Error(`Error: ${exp.id} is undefined`);
+      return getFromStates(states, exp.id);
     }
     if (exp instanceof ast.EXP_ASSIGN) {
       const lhsExp = exp.lhs;
       const rhsExp = this.evalExpression(exp.rhs, states);
 
       if (lhsExp instanceof ast.EXP_ID) {
-        const identifier = lhsExp.id;
-
-        for (let state of states.reverse()) {
-          if (state[identifier] !== undefined) {
-            state[identifier] = rhsExp;
-            return rhsExp;
-          }
-        }
-
-        declare(states, identifier, rhsExp);
+        return declare(states, lhsExp.id, rhsExp);
       }
-      return rhsExp;
+      // return rhsExp;
     }
     if (exp instanceof ast.EXP_BINARY) {
       const areNum = (n1, n2) => typeof n1 === "number" && typeof n2 === "number";
