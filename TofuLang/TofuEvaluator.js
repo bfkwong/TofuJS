@@ -69,17 +69,20 @@ function declare(states, identifier, rhsExp) {
   return rhsExp;
 }
 
-function triggerError(msg) {
-  throw new Error(msg);
+function triggerError(msg, error) {
+  if (error) console.error(`Error: ${msg} at line ${error.line} column ${error.column}`);
+  else console.error(`Error: ${msg}`);
+  process.exit(0);
 }
 
-function getFromStates(states, id) {
+function getFromStates(states, id, error, NO_ERR) {
   for (let state of states.reverse()) {
     if (state[id] !== undefined) {
       return state[id];
     }
   }
-  throw new Error(`Error: ${id} not declared`);
+  if (NO_ERR !== "NO_ERR") triggerError(`${id} not declared`, error);
+  return null;
 }
 
 class ReturnValue extends Error {
@@ -143,13 +146,17 @@ class TofuEvaluator {
   evalExpressionStatement(stmt, states) {
     if (stmt.exp instanceof ast.EXP_ID) {
       try {
-        getFromStates(states, stmt.exp.id);
+        const res = getFromStates(states, stmt.exp.id, stmt.error, "NO_ERR");
+        if (res === null) {
+          declare(states, stmt.exp.id, new UndefinedValue());
+        }
       } catch (err) {
         states.reverse()[0][stmt.exp.id] = new UndefinedValue();
         return states;
       }
+    } else {
+      this.evalExpression(stmt.exp, states);
     }
-    this.evalExpression(stmt.exp, states);
     return states;
   }
 
@@ -165,7 +172,7 @@ class TofuEvaluator {
         case "UndefinedValue":
           return undefined;
         case "FieldValue":
-          return extractText(getFromStates(value.env, value.field));
+          return extractText(getFromStates(value.env, value.field, res.error));
         default:
           return value;
       }
@@ -226,7 +233,7 @@ class TofuEvaluator {
       return new StringValue(exp.str.slice(1, -1));
     }
     if (exp instanceof ast.EXP_ID) {
-      return getFromStates(states, exp.id);
+      return getFromStates(states, exp.id, exp.error);
     }
     if (exp instanceof ast.EXP_ASSIGN) {
       const lhsExp = exp.lhs;
@@ -253,51 +260,51 @@ class TofuEvaluator {
       let rht = this.evalExpression(exp.rht, states);
 
       if (lft instanceof FieldValue) {
-        lft = getFromStates(lft.env, lft.field);
+        lft = getFromStates(lft.env, lft.field, exp.error);
       }
       if (rht instanceof FieldValue) {
-        rht = getFromStates(rht.env, rht.field);
+        rht = getFromStates(rht.env, rht.field, exp.error);
       }
 
       if (opr instanceof ast.BOP_PLUS) {
         if (areNum(lft, rht)) return new NumValue(lft.num + rht.num);
         else if (areStr(lft, rht)) return new StringValue(lft.str + rht.str);
-        else triggerError("Error: only subtract num");
+        else triggerError("only add nums or strings", exp);
       }
       if (opr instanceof ast.BOP_MINUS) {
-        return areNum(lft, rht) ? new NumValue(lft.num - rht.num) : triggerError("Error: only subtract num");
+        return areNum(lft, rht) ? new NumValue(lft.num - rht.num) : triggerError("only subtract num", exp);
       }
       if (opr instanceof ast.BOP_TIMES) {
-        return areNum(lft, rht) ? new NumValue(lft.num * rht.num) : triggerError("Error: only subtract num");
+        return areNum(lft, rht) ? new NumValue(lft.num * rht.num) : triggerError("only multiplu num", exp);
       }
       if (opr instanceof ast.BOP_DIVIDE) {
-        return areNum(lft, rht) ? new NumValue(lft.num / rht.num) : triggerError("Error: only subtract num");
+        return areNum(lft, rht) ? new NumValue(lft.num / rht.num) : triggerError("only divide num", exp);
       }
       if (opr instanceof ast.BOP_AND) {
-        return areBool(lft, rht) ? lft.bool && rht.bool : triggerError("Error: only use logical `and` on booleans");
+        return areBool(lft, rht) ? lft.bool && rht.bool : triggerError("only use logical `and` on booleans", exp);
       }
       if (opr instanceof ast.BOP_OR) {
-        return areBool(lft, rht) ? lft.bool || rht.bool : triggerError("Error: only use logical `or` on booleans");
+        return areBool(lft, rht) ? lft.bool || rht.bool : triggerError("only use logical `or` on booleans", exp);
       }
       if (opr instanceof ast.BOP_LT) {
         if (areNum(lft, rht)) return new BoolValue(lft.num < rht.num);
         else if (areStr(lft, rht)) return new BoolValue(lft.str < rht.str);
-        else triggerError("Error: only use comparator on string or num");
+        else triggerError("only use comparator on string or num", exp);
       }
       if (opr instanceof ast.BOP_LE) {
         if (areNum(lft, rht)) return new BoolValue(lft.num <= rht.num);
         else if (areStr(lft, rht)) return new BoolValue(lft.str <= rht.str);
-        else triggerError("Error: only use comparator on string or num");
+        else triggerError("only use comparator on string or num", exp);
       }
       if (opr instanceof ast.BOP_GT) {
         if (areNum(lft, rht)) return new BoolValue(lft.num > rht.num);
         else if (areStr(lft, rht)) return new BoolValue(lft.str > rht.str);
-        else triggerError("Error: only use comparator on string or num");
+        else triggerError("only use comparator on string or num", exp);
       }
       if (opr instanceof ast.BOP_GE) {
         if (areNum(lft, rht)) return new BoolValue(lft.num >= rht.num);
         else if (areStr(lft, rht)) return new BoolValue(lft.str >= rht.str);
-        else triggerError("Error: only use comparator on string or num");
+        else triggerError("only use comparator on string or num", exp);
       }
       if (opr instanceof ast.BOP_EQ) {
         if (areBool(lft, rht)) return new BoolValue(lft.bool === rht.bool);
@@ -313,21 +320,21 @@ class TofuEvaluator {
         else if (areUndef(lft, rht)) return new BoolValue(false);
         else return new BoolValue(lft !== rht);
       }
-      throw new Error("Error: unexpected binary operator");
+      triggerError("unexpected binary operator", exp);
     }
     if (exp instanceof ast.EXP_UNARY) {
       let opndRes = this.evalExpression(exp.opnd, states);
       let opr = exp.opr;
 
       if (opr instanceof ast.UOP_MINUS) {
-        return typeof opndRes === "number" ? -1 * opndRes : triggerError("Error: can only use `-` on number");
+        return typeof opndRes === "number" ? -1 * opndRes : triggerError("can only use `-` on number", exp);
       }
       if (opr instanceof ast.UOP_NOT) {
         return opndRes instanceof BoolValue
           ? new BoolValue(!opndRes.bool)
-          : triggerError("Error: can only use `!` on booleans");
+          : triggerError("can only use `!` on booleans", exp);
       }
-      throw new Error("Error: unexpected unary operators");
+      triggerError("unexpected unary operators", exp);
     }
     if (exp instanceof ast.EXP_CALL) {
       if (exp.func instanceof ast.EXP_ID && Object.keys(stdfunc).includes(exp.func.id)) {
@@ -343,7 +350,7 @@ class TofuEvaluator {
       }
       if (funcExpr instanceof ListValue) {
         if (exp.args.length === 0) {
-          triggerError("Give a value to access list");
+          triggerError("Give a value to access list", exp);
         }
         if (exp.args.length === 1) {
           return funcExpr.list[this.evalExpression(exp.args[0]).num];
@@ -354,18 +361,18 @@ class TofuEvaluator {
           return new ListValue(funcExpr.list.slice(arg0val, arg1val));
         }
         if (exp.args.length > 2) {
-          triggerError("Incorrect number of arguments");
+          triggerError("Incorrect number of arguments", exp);
         }
       }
       if (funcExpr instanceof HashMap) {
         if (exp.args.length === 0) {
-          triggerError("Give a value to access the map");
+          triggerError("Give a value to access the map", exp);
         }
         if (exp.args.length === 1) {
           return funcExpr.map[this.evalExpression(exp.args[0]).str];
         }
         if (exp.args.length > 1) {
-          triggerError("HashMap access only takes 1 argument");
+          triggerError("HashMap access only takes 1 argument", exp);
         }
       }
 
@@ -406,10 +413,10 @@ class TofuEvaluator {
       const object = this.evalExpression(exp.obj, states);
 
       if (!(object instanceof ObjectValue)) {
-        triggerError("Error: trying to access an attribute of something not an object");
+        triggerError("trying to access an attribute of something not an object", exp);
       }
 
-      const fieldState = getFromStates(object.env, exp.field);
+      const fieldState = getFromStates(object.env, exp.field, exp.error);
 
       if (fieldState instanceof ClosureValue) {
         return new ClosureValue(fieldState.code, object.env);

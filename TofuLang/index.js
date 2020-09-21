@@ -16,7 +16,7 @@ function scripter(input) {
 }
 
 if (process.argv[2]) {
-  const input = fs.readFileSync(`./SampleCode/code/${process.argv[2]}`, "utf8");
+  const input = fs.readFileSync(process.argv[2], "utf8");
   scripter(input);
 } else {
   const input = [];

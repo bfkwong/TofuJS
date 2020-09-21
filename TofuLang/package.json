@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "antlr4": "^4.8.0",
+    "node-fetch": "^2.6.1",
     "readline-sync": "^1.4.10"
   }
 }
