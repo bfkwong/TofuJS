@@ -13,11 +13,24 @@ class TofuVisitor {
   }
 
   visitProgram(ctx) {
+    let importDecl = this.visitImportDeclarations(ctx.importDecl());
     let classDecl = this.visitClassDeclarations(ctx.classDecls());
     let funDecl = this.visitFunctionsDeclarations(ctx.funDecl());
     let stmts = this.visitStatementDeclarations(ctx.stmt());
 
-    return new ast.PROGRAM(funDecl, classDecl, stmts);
+    return new ast.PROGRAM(funDecl, classDecl, stmts, importDecl);
+  }
+
+  visitImportDeclarations(ctx) {
+    if (ctx) {
+      let imports = [];
+      for (let importDecl of ctx) {
+        let filename = importDecl.STRING().getText();
+        imports.push(new ast.IMPORT(filename));
+      }
+      return imports;
+    }
+    return [];
   }
 
   visitClassDeclarations(ctx) {

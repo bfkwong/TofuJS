@@ -38,6 +38,15 @@ tofuListener.prototype.exitFunDecl = function(ctx) {
 };
 
 
+// Enter a parse tree produced by tofuParser#importDecl.
+tofuListener.prototype.enterImportDecl = function(ctx) {
+};
+
+// Exit a parse tree produced by tofuParser#importDecl.
+tofuListener.prototype.exitImportDecl = function(ctx) {
+};
+
+
 // Enter a parse tree produced by tofuParser#parameter.
 tofuListener.prototype.enterParameter = function(ctx) {
 };

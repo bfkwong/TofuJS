@@ -1,5 +1,20 @@
+const fs = require("fs");
 const ast = require("./ast");
 const stdfunc = require("./TofuStdFunc").stdfunc;
+
+function getAST(input) {
+  const antlr4 = require("antlr4");
+  const TofuLexer = require("./AntlrFiles/tofuLexer").tofuLexer;
+  const TofuParser = require("./AntlrFiles/tofuParser").tofuParser;
+  const TofuVisitor = require("./TofuVisitor").TofuVisitor;
+
+  const chars = new antlr4.InputStream(input);
+  const lexer = new TofuLexer(chars);
+  const tokens = new antlr4.CommonTokenStream(lexer);
+  const parser = new TofuParser(tokens);
+  const visitor = new TofuVisitor(parser);
+  return visitor.ast;
+}
 
 class NumValue {
   constructor(num) {
@@ -100,7 +115,24 @@ class TofuEvaluator {
   }
 
   evalProgram(program, states) {
-    this.evalStatements(program.stmts, this.evalFunctions(program.funcs, this.evalClasses(program.classes, states)));
+    let staten1 = this.evalImports(program.imports, states);
+    let state0 = this.evalClasses(program.classes, staten1);
+    let state1 = this.evalFunctions(program.funcs, state0);
+    let state2 = this.evalStatements(program.stmts, state1);
+
+    return state2;
+  }
+
+  evalImports(imports, states) {
+    imports.forEach((i) => {
+      const filename = i.filename.slice(1, -1);
+      const input = fs.readFileSync(filename, "utf8");
+
+      const ast = getAST(input);
+      states = this.evalProgram(ast, states);
+    });
+
+    return states;
   }
 
   evalClasses(clss, states) {

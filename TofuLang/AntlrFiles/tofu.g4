@@ -1,13 +1,13 @@
 grammar tofu;
 
-program: (funDecl | classDecls | stmt)*;
+program: (importDecl | funDecl | classDecls | stmt)*;
 
 classDecls:
 	'blueprint' 'for' IDENTIFIER '{' (funDecl | stmt)* '}' # class;
 
-funDecl:
-	IDENTIFIER parameter '=' stmt
-	;
+funDecl: IDENTIFIER parameter '=' stmt;
+
+importDecl: 'import' STRING ';';
 
 parameter: '(' (IDENTIFIER (',' IDENTIFIER)*)? ')';
 
@@ -59,28 +59,27 @@ multExpression: unaryExpression (multOp unaryExpression)*;
 
 multOp: '*' | '/';
 
-unaryExpression: (unaryOp=('!' | '-'))? callMemExpression;
+unaryExpression: (unaryOp = ('!' | '-'))? callMemExpression;
 
 callMemExpression: primaryExpression (callMemHelperExpression)*;
 
 callMemHelperExpression:
-	'.' IDENTIFIER				    # CallMemDot
-	| arguments	                    # CallMemArg;
+	'.' IDENTIFIER	# CallMemDot
+	| arguments		# CallMemArg;
 
 arguments: '(' (expression (',' expression)*)? ')';
 
 primaryExpression:
-	'(' expression ')'							# NestedExpression
-	| NUMBER									# NumberExpression
-	| 'true'									# TrueExpression
-	| 'false'									# FalseExpression
-	| STRING									# StringExpression
-	| 'undefined'								# UndefinedExpression
-	| IDENTIFIER								# IdentifierExpression
-	| 'make' IDENTIFIER							# MakeExpression
-	| '[' (expression (',' expression)*) ']'	# ListExpression
-	| '{' (STRING ':' expression ',')* (STRING ':' expression)? '}' # MapExpression
-	;
+	'(' expression ')'												# NestedExpression
+	| NUMBER														# NumberExpression
+	| 'true'														# TrueExpression
+	| 'false'														# FalseExpression
+	| STRING														# StringExpression
+	| 'undefined'													# UndefinedExpression
+	| IDENTIFIER													# IdentifierExpression
+	| 'make' IDENTIFIER												# MakeExpression
+	| '[' (expression (',' expression)*) ']'						# ListExpression
+	| '{' (STRING ':' expression ',')* (STRING ':' expression)? '}'	# MapExpression;
 
 STRING:
 	'"' (ESC | SAFECODEPOINT)* '"'

@@ -249,8 +249,16 @@ class CLASS {
 }
 exports.CLASS = CLASS;
 
+class IMPORT {
+  constructor(filename) {
+    this.filename = filename;
+  }
+}
+exports.IMPORT = IMPORT;
+
 class PROGRAM {
-  constructor(funcs, classes, stmts) {
+  constructor(funcs, classes, stmts, imports) {
+    this.imports = imports;
     this.funcs = funcs;
     this.classes = classes;
     this.stmts = stmts;
