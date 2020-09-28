@@ -1,15 +1,20 @@
+const { NumValue, StringValue } = require("./TofuEvaluator");
+
 const stdfunc = {
   input: (input) => {
     const readlineSync = require("readline-sync");
 
     let userName = readlineSync.question(input);
-    return userName;
+    return new StringValue(userName);
   },
   toNumber: (input) => {
-    return parseFloat(input);
+    return new NumValue(parseFloat(input));
   },
   toString: (input) => {
-    return `${input}`;
+    return new StringValue(`${input}`);
+  },
+  random: () => {
+    return new NumValue(Math.random());
   }
 };
 

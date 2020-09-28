@@ -1,6 +1,6 @@
 const fs = require("fs");
 const ast = require("./ast");
-const stdfunc = require("./TofuStdFunc").stdfunc;
+const execSync = require("child_process").execSync;
 
 function getAST(input) {
   const antlr4 = require("antlr4");
@@ -72,6 +72,7 @@ const areNum = (n1, n2) => n1 instanceof NumValue && n2 instanceof NumValue;
 const areBool = (n1, n2) => n1 instanceof BoolValue && n2 instanceof BoolValue;
 const areStr = (n1, n2) => n1 instanceof StringValue && n2 instanceof StringValue;
 const areUndef = (n1, n2) => n1 instanceof UndefinedValue && n2 instanceof UndefinedValue;
+const areList = (n1, n2) => n1 instanceof ListValue && n2 instanceof ListValue;
 
 function declare(states, identifier, rhsExp) {
   for (let state of states.reverse()) {
@@ -98,6 +99,23 @@ function getFromStates(states, id, error, NO_ERR) {
   }
   if (NO_ERR !== "NO_ERR") triggerError(`${id} not declared`, error);
   return null;
+}
+
+function extractText(value, res) {
+  switch (value.constructor.name) {
+    case "NumValue":
+      return value.num;
+    case "StringValue":
+      return value.str;
+    case "BoolValue":
+      return value.bool;
+    case "UndefinedValue":
+      return undefined;
+    case "FieldValue":
+      return extractText(getFromStates(value.env, value.field, res.error));
+    default:
+      return value;
+  }
 }
 
 class ReturnValue extends Error {
@@ -193,33 +211,16 @@ class TofuEvaluator {
   }
 
   evalPrintStatement(res, states) {
-    function extractText(value) {
-      switch (value.constructor.name) {
-        case "NumValue":
-          return value.num;
-        case "StringValue":
-          return value.str;
-        case "BoolValue":
-          return value.bool;
-        case "UndefinedValue":
-          return undefined;
-        case "FieldValue":
-          return extractText(getFromStates(value.env, value.field, res.error));
-        default:
-          return value;
-      }
-    }
-
     if (res instanceof ListValue) {
-      console.log(res.list.map((v) => extractText(v)));
+      console.log(res.list.map((v) => extractText(v, res)));
     } else if (res instanceof HashMap) {
       const newmap = {};
       Object.keys(res.map).forEach((key) => {
-        newmap[key] = extractText(res.map[key]);
+        newmap[key] = extractText(res.map[key], res);
       });
       console.log(newmap);
     } else {
-      console.log(extractText(res));
+      console.log(extractText(res, res));
     }
     return states;
   }
@@ -301,6 +302,7 @@ class TofuEvaluator {
       if (opr instanceof ast.BOP_PLUS) {
         if (areNum(lft, rht)) return new NumValue(lft.num + rht.num);
         else if (areStr(lft, rht)) return new StringValue(lft.str + rht.str);
+        else if (areList(lft, rht)) return new ListValue(lft.list.concat(rht.list));
         else triggerError("only add nums or strings", exp);
       }
       if (opr instanceof ast.BOP_MINUS) {
@@ -472,5 +474,50 @@ class TofuEvaluator {
     return exp;
   }
 }
+
+const stdfunc = {
+  input: (input) => {
+    const readlineSync = require("readline-sync");
+
+    let userName = readlineSync.question(input);
+    return new StringValue(userName);
+  },
+  toNumber: (input) => {
+    const val = extractText(input);
+    return new NumValue(parseFloat(val));
+  },
+  toString: (input) => {
+    const val = extractText(input);
+    return new StringValue(val.toString());
+  },
+  random: () => {
+    return new NumValue(Math.random());
+  },
+  power: (a, b) => {
+    const aval = extractText(a);
+    const bval = extractText(b);
+
+    return new NumValue(Math.pow(aval, bval));
+  },
+  sqrt: (a, b) => {
+    const aval = extractText(a);
+    const bval = extractText(b);
+    return new NumValue(Math.sqrt(aval, bval));
+  },
+  exec: (a) => {
+    const aval = extractText(a);
+    return new StringValue(execSync(aval));
+  },
+  strsplit(str, delim) {
+    const strval = extractText(str);
+    const delimval = extractText(delim);
+    return new ListValue(strval.split(delimval).map((sv) => new StringValue(sv)));
+  },
+  strjoin(strs, separators) {
+    const separval = extractText(separators);
+    const newstrs = strs.list.map((str) => extractText(str));
+    return new StringValue(newstrs.join(separval));
+  }
+};
 
 exports.TofuEvaluator = TofuEvaluator;
