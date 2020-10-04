@@ -1,5 +1,6 @@
 const fs = require("fs");
 const ast = require("./ast");
+const util = require("util");
 const execSync = require("child_process").execSync;
 
 function getAST(input) {
@@ -113,8 +114,26 @@ function extractText(value, res) {
       return undefined;
     case "FieldValue":
       return extractText(getFromStates(value.env, value.field, res.error));
+    case "ListValue":
+      return value.list.map((item) => {
+        if (item instanceof HashMap) return unwrapMap(item);
+        else return extractText(item);
+      });
     default:
       return value;
+  }
+}
+
+function unwrapMap(map) {
+  if (map instanceof HashMap) {
+    let innerMap = map.map;
+    Object.keys(innerMap).forEach((map) => {
+      if (innerMap[map] instanceof HashMap) innerMap[map] = unwrapMap(innerMap[map]);
+      else innerMap[map] = extractText(innerMap[map]);
+    });
+    return innerMap;
+  } else {
+    return map;
   }
 }
 
@@ -212,13 +231,11 @@ class TofuEvaluator {
 
   evalPrintStatement(res, states) {
     if (res instanceof ListValue) {
-      console.log(res.list.map((v) => extractText(v, res)));
+      const newlist = extractText(res);
+      console.log(newlist);
     } else if (res instanceof HashMap) {
-      const newmap = {};
-      Object.keys(res.map).forEach((key) => {
-        newmap[key] = extractText(res.map[key], res);
-      });
-      console.log(newmap);
+      const newmap = unwrapMap(res);
+      console.log(util.inspect(newmap, { showHidden: false, depth: null }));
     } else {
       console.log(extractText(res, res));
     }
@@ -274,6 +291,14 @@ class TofuEvaluator {
 
       if (lhsExp instanceof ast.EXP_ID) {
         return declare(states, lhsExp.id, rhsExp);
+      }
+
+      if (lhsExp instanceof ast.EXP_CALL) {
+        const funcExpr = this.evalExpression(lhsExp.func, states);
+        if (funcExpr instanceof HashMap) {
+          funcExpr.map[this.evalExpression(lhsExp.args[0]).str] = rhsExp;
+        }
+        return rhsExp;
       }
 
       const fieldval = this.evalExpression(lhsExp, states);
