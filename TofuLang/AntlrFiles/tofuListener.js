@@ -263,12 +263,30 @@ tofuListener.prototype.exitCallMemArg = function(ctx) {
 };
 
 
+// Enter a parse tree produced by tofuParser#CallAccess.
+tofuListener.prototype.enterCallAccess = function(ctx) {
+};
+
+// Exit a parse tree produced by tofuParser#CallAccess.
+tofuListener.prototype.exitCallAccess = function(ctx) {
+};
+
+
 // Enter a parse tree produced by tofuParser#arguments.
 tofuListener.prototype.enterArguments = function(ctx) {
 };
 
 // Exit a parse tree produced by tofuParser#arguments.
 tofuListener.prototype.exitArguments = function(ctx) {
+};
+
+
+// Enter a parse tree produced by tofuParser#access.
+tofuListener.prototype.enterAccess = function(ctx) {
+};
+
+// Exit a parse tree produced by tofuParser#access.
+tofuListener.prototype.exitAccess = function(ctx) {
 };
 
 

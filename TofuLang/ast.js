@@ -122,6 +122,15 @@ class EXP_CALL {
 }
 exports.EXP_CALL = EXP_CALL;
 
+class EXP_ACCESS {
+  constructor(item, args, error) {
+    this.item = item;
+    this.args = args;
+    this.error = error;
+  }
+}
+exports.EXP_ACCESS = EXP_ACCESS;
+
 class EXP_DOT {
   constructor(obj, field, error) {
     this.obj = obj;
