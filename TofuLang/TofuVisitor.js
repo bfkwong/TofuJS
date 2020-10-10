@@ -276,12 +276,15 @@ class TofuVisitor {
     for (let cmHelper of ctx.callMemHelperExpression()) {
       if (cmHelper.constructor.name === "CallMemDotContext") {
         expr = new ast.EXP_DOT(expr, cmHelper.IDENTIFIER().getText(), error);
-      } else {
+      } else if (cmHelper.constructor.name === "CallMemArgContext") {
         let args = cmHelper
           .arguments()
           .expression()
           .map((ex) => this.visitExpression(ex));
         expr = new ast.EXP_CALL(expr, args, error);
+      } else {
+        let args = cmHelper.access().expression().map((ex) => this.visitExpression(ex));
+        expr = new ast.EXP_ACCESS(expr, args, error);
       }
     }
     return expr;

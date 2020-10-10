@@ -298,6 +298,20 @@ class TofuEvaluator {
         if (funcExpr instanceof HashMap) {
           funcExpr.map[this.evalExpression(lhsExp.args[0]).str] = rhsExp;
         }
+        if (funcExpr instanceof ListValue) {
+          funcExpr.list[this.evalExpression(lhsExp.args[0]).num] = rhsExp;
+        }
+        return rhsExp;
+      }
+
+      if (lhsExp instanceof ast.EXP_ACCESS) {
+        const funcExpr = this.evalExpression(lhsExp.item, states);
+        if (funcExpr instanceof HashMap) {
+          funcExpr.map[this.evalExpression(lhsExp.args[0]).str] = rhsExp;
+        }
+        if (funcExpr instanceof ListValue) {
+          funcExpr.list[this.evalExpression(lhsExp.args[0]).num] = rhsExp;
+        }
         return rhsExp;
       }
 
@@ -394,6 +408,38 @@ class TofuEvaluator {
           : triggerError("can only use `!` on booleans", exp);
       }
       triggerError("unexpected unary operators", exp);
+    }
+    if (exp instanceof ast.EXP_ACCESS) {
+      const funcExpr = this.evalExpression(exp.item, states);
+
+      if (funcExpr instanceof ListValue) {
+        if (exp.args.length === 0) {
+          triggerError("Give a value to access list", exp);
+        }
+        if (exp.args.length === 1) {
+          return funcExpr.list[this.evalExpression(exp.args[0]).num];
+        }
+        if (exp.args.length === 2) {
+          const arg0val = this.evalExpression(exp.args[0]).num;
+          const arg1val = this.evalExpression(exp.args[1]).num;
+          return new ListValue(funcExpr.list.slice(arg0val, arg1val));
+        }
+        if (exp.args.length > 2) {
+          triggerError("Incorrect number of arguments", exp);
+        }
+      } else if (funcExpr instanceof HashMap) {
+        if (exp.args.length === 0) {
+          triggerError("Give a value to access the map", exp);
+        }
+        if (exp.args.length === 1) {
+          return funcExpr.map[this.evalExpression(exp.args[0]).str];
+        }
+        if (exp.args.length > 1) {
+          triggerError("HashMap access only takes 1 argument", exp);
+        }
+      } else {
+        triggerError("Can only use '[ ]' on lists and maps", exp);
+      }
     }
     if (exp instanceof ast.EXP_CALL) {
       if (exp.func instanceof ast.EXP_ID && Object.keys(stdfunc).includes(exp.func.id)) {

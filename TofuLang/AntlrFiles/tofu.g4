@@ -65,9 +65,12 @@ callMemExpression: primaryExpression (callMemHelperExpression)*;
 
 callMemHelperExpression:
 	'.' IDENTIFIER	# CallMemDot
-	| arguments		# CallMemArg;
+	| arguments		# CallMemArg
+	| access		# CallAccess;
 
 arguments: '(' (expression (',' expression)*)? ')';
+
+access: '[' (expression (',' expression)*)? ']';
 
 primaryExpression:
 	'(' expression ')'												# NestedExpression
