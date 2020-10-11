@@ -79,10 +79,12 @@ function declare(states, identifier, rhsExp) {
   for (let state of states.reverse()) {
     if (state[identifier] !== undefined) {
       state[identifier] = rhsExp;
+      states.reverse();
       return rhsExp;
     }
   }
   states[states.length - 1][identifier] = rhsExp;
+  states.reverse();
   return rhsExp;
 }
 
@@ -95,10 +97,12 @@ function triggerError(msg, error) {
 function getFromStates(states, id, error, NO_ERR) {
   for (let state of states.reverse()) {
     if (state[id] !== undefined) {
+      states.reverse();      
       return state[id];
     }
   }
   if (NO_ERR !== "NO_ERR") triggerError(`${id} not declared`, error);
+  states.reverse();
   return null;
 }
 
@@ -202,8 +206,26 @@ class TofuEvaluator {
         states = this.evalWhileStatement(s, states);
       } else if (s instanceof ast.ST_RETURN) {
         this.evalReturnStatement(s, states);
+      } else if (s instanceof ast.ST_FOR) {
+        this.evalForEach(s, states);
       }
     });
+    return states;
+  }
+
+  evalForEach(stmt, states) {
+    const iteratedItem = this.evalExpression(stmt.itemList, states);
+    if (!(iteratedItem instanceof ListValue)) {
+      triggerError("Can only use for each loops on lists", stmt.itemList);
+    }
+    
+    states.push({});
+    for (let item of iteratedItem.list) {
+      states[states.length - 1][stmt.item] = this.evalExpression(item, states); 
+      this.evalStatements([stmt.code], states);
+    }
+    states.pop();
+
     return states;
   }
 
@@ -221,6 +243,7 @@ class TofuEvaluator {
         }
       } catch (err) {
         states.reverse()[0][stmt.exp.id] = new UndefinedValue();
+        states.reverse();
         return states;
       }
     } else {
@@ -251,9 +274,10 @@ class TofuEvaluator {
 
     if (guardRes.bool) {
       return this.evalBlockStatement(stmt.th, states);
-    } else {
+    } else if (guardRes.bool === false && stmt.el) {
       return this.evalBlockStatement(stmt.el, states);
     }
+    return states;
   }
 
   evalWhileStatement(stmt, states) {
