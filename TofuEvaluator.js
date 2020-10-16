@@ -89,6 +89,10 @@ function declare(states, identifier, rhsExp) {
 }
 
 function triggerError(msg, error) {
+  if (MODE === "IDE") {
+    if (error) throw new Error(`Error: ${msg} at line ${error.line} column ${error.column}`);
+    throw new Error(`Error: ${msg}`);
+  } 
   if (error) console.error(`Error: ${msg} at line ${error.line} column ${error.column}`);
   else console.error(`Error: ${msg}`);
   process.exit(0);
@@ -148,11 +152,13 @@ class ReturnValue extends Error {
   }
 }
 
+let MODE = undefined; 
 class TofuEvaluator {
   constructor(ast, mode) {
     this.ast = ast;
     this.classes = {};
     this.mode = mode;
+    MODE = mode; 
     this.result = [];
     this.evalProgram(ast, [{}]);
   }
