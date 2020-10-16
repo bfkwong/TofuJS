@@ -149,9 +149,11 @@ class ReturnValue extends Error {
 }
 
 class TofuEvaluator {
-  constructor(ast) {
+  constructor(ast, mode) {
     this.ast = ast;
     this.classes = {};
+    this.mode = mode;
+    this.result = [];
     this.evalProgram(ast, [{}]);
   }
 
@@ -255,12 +257,24 @@ class TofuEvaluator {
   evalPrintStatement(res, states) {
     if (res instanceof ListValue) {
       const newlist = extractText(res);
-      console.log(newlist);
+      if (this.mode === "IDE") {
+        this.result.push(newList);
+      } else {
+        console.log(newlist);
+      }
     } else if (res instanceof HashMap) {
       const newmap = unwrapMap(res);
-      console.log(util.inspect(newmap, { showHidden: false, depth: null }));
+      if (this.mode === "IDE") {
+        this.result.push(util.inspect(newmap, { showHidden: false, depth: null }));
+      } else {
+        console.log(util.inspect(newmap, { showHidden: false, depth: null }));
+      }
     } else {
-      console.log(extractText(res, res));
+      if (this.mode === "IDE") {
+        this.result.push(extractText(res, res));
+      } else {
+        console.log(extractText(res, res));
+      }
     }
     return states;
   }

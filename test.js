@@ -16,7 +16,7 @@ fs.readdir("./SampleCode/code", (err, files) => {
 
     const exptxt = fs.readFileSync(expect, "utf8");
 
-    execute(`node ./index.js ${source}`, (output) => {
+    execute(`node ./TofuScript.js ${source}`, (output) => {
       if (output === exptxt) {
         console.log(`Passed test ${source}`);
       } else {
