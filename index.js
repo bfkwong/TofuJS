@@ -10,7 +10,8 @@ function scripter(input) {
   const tokens = new antlr4.CommonTokenStream(lexer);
   const parser = new TofuParser(tokens);
   const visitor = new TofuVisitor(parser);
-  return new TofuEvaluator(visitor.ast, "IDE").result.join("\n");
+  const result = new TofuEvaluator(visitor.ast, "IDE").result.join("\n");
+  return result;
 }
 
 module.exports = scripter;
