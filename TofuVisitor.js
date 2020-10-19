@@ -1,4 +1,6 @@
 const ast = require("./ast");
+const tofuParser = require("./AntlrFiles/tofuParser").tofuParser;
+
 
 class ErrorObject {
   constructor(line, column) {
@@ -274,9 +276,9 @@ class TofuVisitor {
 
     const error = new ErrorObject(ctx.start.line, ctx.start.column);
     for (let cmHelper of ctx.callMemHelperExpression()) {
-      if (cmHelper.constructor.name === "CallMemDotContext") {
+      if (cmHelper instanceof tofuParser.CallMemDotContext) {
         expr = new ast.EXP_DOT(expr, cmHelper.IDENTIFIER().getText(), error);
-      } else if (cmHelper.constructor.name === "CallMemArgContext") {
+      } else if (cmHelper instanceof tofuParser.CallMemArgContext) {
         let args = cmHelper
           .arguments()
           .expression()
@@ -292,53 +294,43 @@ class TofuVisitor {
 
   visitPrimaryExpression(ctx) {
     let expr;
-
     const error = new ErrorObject(ctx.start.line, ctx.start.column);
-    switch (ctx.constructor.name) {
-      case "NumberExpressionContext":
-        let number = ctx.NUMBER().getText();
-        let numParsed = number.includes(".") ? parseFloat(number) : parseInt(number);
-        expr = new ast.EXP_NUM(numParsed, error);
-        break;
-      case "TrueExpressionContext":
-        expr = new ast.EXP_TRUE(error);
-        break;
-      case "FalseExpressionContext":
-        expr = new ast.EXP_FALSE(error);
-        break;
-      case "StringExpressionContext":
-        expr = new ast.EXP_STR(ctx.STRING().getText(), error);
-        break;
-      case "UndefinedExpressionContext":
-        expr = new ast.EXP_UNDEFINED(error);
-        break;
-      case "IdentifierExpressionContext":
-        expr = new ast.EXP_ID(ctx.IDENTIFIER().getText(), error);
-        break;
-      case "MakeExpressionContext":
-        expr = new ast.EXP_MAKE(ctx.IDENTIFIER().getText(), error);
-        break;
-      case "ListExpressionContext":
-        let exprs = ctx.expression().map((ex) => this.visitExpression(ex));
-        expr = new ast.EXP_LIST(exprs, error);
-        break;
-      case "NestedExpressionContext":
-        let nestedExpr = this.visitExpression(ctx.expression());
-        expr = nestedExpr;
-        break;
-      case "MapExpressionContext":
-        let keys = ctx.STRING();
-        let values = ctx.expression();
 
-        let outputMap = {};
-        for (let i = 0; i < keys.length; i++) {
-          outputMap[keys[i].getText()] = this.visitExpression(values[i]);
-        }
-        expr = new ast.EXP_MAP(outputMap, error);
-        break;
-      default:
-        throw new Error("Error: Expression Type Unmatched");
+    if (ctx instanceof tofuParser.NumberExpressionContext) {
+      let number = ctx.NUMBER().getText();
+      let numParsed = number.includes(".") ? parseFloat(number) : parseInt(number);
+      expr = new ast.EXP_NUM(numParsed, error);
+    } else if (ctx instanceof tofuParser.TrueExpressionContext) {
+      expr = new ast.EXP_TRUE(error);
+    } else if (ctx instanceof tofuParser.FalseExpressionContext) {
+      expr = new ast.EXP_FALSE(error);
+    } else if (ctx instanceof tofuParser.StringExpressionContext) {
+      expr = new ast.EXP_STR(ctx.STRING().getText(), error);
+    } else if (ctx instanceof tofuParser.UndefinedExpressionContext) {
+      expr = new ast.EXP_UNDEFINED(error);
+    } else if (ctx instanceof tofuParser.IdentifierExpressionContext) {
+      expr = new ast.EXP_ID(ctx.IDENTIFIER().getText(), error);
+    } else if (ctx instanceof tofuParser.MakeExpressionContext) {
+      expr = new ast.EXP_MAKE(ctx.IDENTIFIER().getText(), error);
+    } else if (ctx instanceof tofuParser.ListExpressionContext) {
+      let exprs = ctx.expression().map((ex) => this.visitExpression(ex));
+      expr = new ast.EXP_LIST(exprs, error);
+    } else if (ctx instanceof tofuParser.NestedExpressionContext) {
+      let nestedExpr = this.visitExpression(ctx.expression());
+      expr = nestedExpr;
+    } else if (ctx instanceof tofuParser.MapExpressionContext) {
+      let keys = ctx.STRING();
+      let values = ctx.expression();
+
+      let outputMap = {};
+      for (let i = 0; i < keys.length; i++) {
+        outputMap[keys[i].getText()] = this.visitExpression(values[i]);
+      }
+      expr = new ast.EXP_MAP(outputMap, error);
+    } else {
+      throw new Error("Error: Expression Type Unmatched");
     }
+
     return expr;
   }
 }

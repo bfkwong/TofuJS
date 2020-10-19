@@ -111,25 +111,16 @@ function getFromStates(states, id, error, NO_ERR) {
 }
 
 function extractText(value, res) {
-  switch (value.constructor.name) {
-    case "NumValue":
-      return value.num;
-    case "StringValue":
-      return value.str;
-    case "BoolValue":
-      return value.bool;
-    case "UndefinedValue":
-      return undefined;
-    case "FieldValue":
-      return extractText(getFromStates(value.env, value.field, res.error));
-    case "ListValue":
-      return value.list.map((item) => {
-        if (item instanceof HashMap) return unwrapMap(item);
-        else return extractText(item);
-      });
-    default:
-      return value;
-  }
+  if (value instanceof NumValue) return value.num;
+  if (value instanceof StringValue) return value.str;
+  if (value instanceof BoolValue) return value.bool;
+  if (value instanceof UndefinedValue) return undefined; 
+  if (value instanceof FieldValue) return extractText(getFromStates(value.env, value.field, res.error));
+  if (value instanceof ListValue) return value.list.map((item) => {
+    if (item instanceof HashMap) return unwrapMap(item);
+    else return extractText(item);
+  });
+  return value
 }
 
 function unwrapMap(map) {
