@@ -35,7 +35,7 @@ class BoolValue {
   }
 }
 
-class UndefinedValue {}
+class UndefinedValue { }
 
 class ClosureValue {
   constructor(code, env) {
@@ -92,7 +92,7 @@ function triggerError(msg, error) {
   if (MODE === "IDE") {
     if (error) throw new Error(`Error: ${msg} at line ${error.line} column ${error.column}`);
     throw new Error(`Error: ${msg}`);
-  } 
+  }
   if (error) console.error(`Error: ${msg} at line ${error.line} column ${error.column}`);
   else console.error(`Error: ${msg}`);
   process.exit(0);
@@ -101,7 +101,7 @@ function triggerError(msg, error) {
 function getFromStates(states, id, error, NO_ERR) {
   for (let state of states.reverse()) {
     if (state[id] !== undefined) {
-      states.reverse();      
+      states.reverse();
       return state[id];
     }
   }
@@ -114,7 +114,7 @@ function extractText(value, res) {
   if (value instanceof NumValue) return value.num;
   if (value instanceof StringValue) return value.str;
   if (value instanceof BoolValue) return value.bool;
-  if (value instanceof UndefinedValue) return undefined; 
+  if (value instanceof UndefinedValue) return "undefined";
   if (value instanceof FieldValue) return extractText(getFromStates(value.env, value.field, res.error));
   if (value instanceof ListValue) return value.list.map((item) => {
     if (item instanceof HashMap) return unwrapMap(item);
@@ -143,13 +143,13 @@ class ReturnValue extends Error {
   }
 }
 
-let MODE = undefined; 
+let MODE = undefined;
 class TofuEvaluator {
   constructor(ast, mode) {
     this.ast = ast;
     this.classes = {};
     this.mode = mode;
-    MODE = mode; 
+    MODE = mode;
     this.result = [];
     this.evalProgram(ast, [{}]);
   }
@@ -217,10 +217,10 @@ class TofuEvaluator {
     if (!(iteratedItem instanceof ListValue)) {
       triggerError("Can only use for each loops on lists", stmt.itemList);
     }
-    
+
     states.push({});
     for (let item of iteratedItem.list) {
-      states[states.length - 1][stmt.item] = this.evalExpression(item, states); 
+      states[states.length - 1][stmt.item] = this.evalExpression(item, states);
       this.evalStatements([stmt.code], states);
     }
     states.pop();
